@@ -1,0 +1,612 @@
+<?php
+if(!function_exists('global_page_function')){
+	function global_page_function() {
+		return 'Ahira';
+	}
+}
+
+if(!function_exists('computefor_house')){
+	function computefor_house($total,$downpayment,$months) {
+		$todivide = $total - $downpayment;
+		$interest = $todivide + ($todivide * .13);
+		$toreturn = $interest/$months;
+		return $toreturn; 
+	}
+}
+
+if (!function_exists('admin_session_redirection')) {
+	function admin_session_redirection(){
+		$CI =& get_instance();
+		if(!$CI->session->userdata('admin')){
+			redirect(base_url().'admin/login', 'location');
+		}
+	}
+}
+
+
+if (!function_exists('re_admin_session_redirection')) {
+	function re_admin_session_redirection(){
+		$CI =& get_instance();
+		if($CI->session->userdata('admin')){
+			redirect(base_url().'admin', 'location');
+		}
+	}
+}
+
+if (!function_exists('admin_session_val')) {
+	function admin_session_val(){
+		$CI =& get_instance();
+		return $CI->session->userdata('admin');
+	}
+}
+
+if (!function_exists('client_session_val')) {
+	function client_session_val(){
+		$CI =& get_instance();
+		return $CI->session->userdata('user');
+	}
+}
+
+if(!function_exists('get_user_data')){
+	function get_user_data($field){
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->from('user');
+		$CI->db->where('user_id', client_session_val());
+		$query = $CI->db->get()->result_array();
+		$query = current($query);
+
+		return ($query[$field]);
+
+	}
+}
+
+if (!function_exists('re_user_session_redirection')) {
+	function re_user_session_redirection(){
+		$CI =& get_instance();
+		if($CI->session->userdata('user')){
+			redirect(base_url().'', 'location');
+		}
+	}
+}
+
+if (!function_exists('user_session_redirection')) {
+	function user_session_redirection(){
+		$CI =& get_instance();
+		if(!$CI->session->userdata('user')){
+			redirect(base_url().'login', 'location');
+		}
+	}
+}
+
+if(!function_exists('get_admin_data')){
+	function get_admin_data($field){
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->from('user');
+		$CI->db->where('user_id', admin_session_val());
+		$query = $CI->db->get()->result_array();
+		$query = current($query);
+
+		return ($query[$field]);
+
+	}
+}
+
+if(!function_exists('get_product_id')){
+	function get_product_id($prod_id){
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->from('product');
+		$CI->db->where('prod_id', $prod_id);
+		$query = $CI->db->get()->result_array();
+		$query = current($query);
+		return ($query);
+
+	}
+}
+
+if(!function_exists('get_history_data')){
+	function get_history_data(){
+		$CI =& get_instance();
+		$CI->db->select('history_log.*,user.*');
+		$CI->db->from('history_log');
+		$CI->db->join('user', 'history_log.user_id = user.user_id', 'inner');
+		$query = $CI->db->get()->result_array();
+	
+		return ($query);
+
+	}
+}
+
+if(!function_exists('get_all_user_data')){
+	function get_all_user_data(){
+		$CI =& get_instance();
+		$CI->db->select('user.*,branch.*');
+		$CI->db->from('user');
+		$CI->db->join('branch', 'user.branch_id = branch.branch_id', 'inner');
+		$query = $CI->db->get()->result_array();
+	
+		return ($query);
+
+	}
+}
+
+if(!function_exists('customer_table_select')){
+	function customer_table_select($branch_id,$credit_status) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("customer");
+		$CI->db->where('branch_id',$branch_id);
+		$CI->db->where('credit_status',$credit_status);
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+if(!function_exists('get_all_product')){
+	function get_all_product() {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("product");
+		$CI->db->order_by('prod_id','ASC');
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+if(!function_exists('get_all_product_ordered')){
+	function get_all_product_ordered($is_ok) {
+		$CI =& get_instance();
+		$CI->db->select("apply_for_item.*,product.*");
+		$CI->db->from("apply_for_item");
+		$CI->db->join('product', 'apply_for_item.product_id = product.prod_id', 'inner');
+		$CI->db->where('apply_for_item.is_ok',$is_ok);
+		$CI->db->where('apply_for_item.user_id',client_session_val());
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+if(!function_exists('get_all_application')){
+	function get_all_application() {
+		$CI =& get_instance();
+		$CI->db->select("apply_for_item.*,product.*,user.*,user_addtional_info.*");
+		$CI->db->from("apply_for_item");
+		$CI->db->join('product', 'apply_for_item.product_id = product.prod_id', 'inner');
+		$CI->db->join('user', 'apply_for_item.user_id = user.user_id', 'inner');
+		$CI->db->join('user_addtional_info', 'apply_for_item.user_id = user_addtional_info.user_id', 'left');
+		
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+if(!function_exists('manage_id_bill')){
+	function manage_id_bill($id) {
+		$CI =& get_instance();
+		$CI->db->select("apply_for_item.*,product.*");
+		$CI->db->from("apply_for_item");
+		$CI->db->join('product', 'apply_for_item.product_id = product.prod_id', 'inner');
+		$CI->db->where('apply_for_item.user_id',client_session_val());
+		$query = $CI->db->get()->result_array();
+		return current($query);
+	}
+}
+
+if(!function_exists('get_all_my_ids')){
+	function get_all_my_ids() {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("customer_image");
+		$CI->db->where('user_id',client_session_val());
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+
+if(!function_exists('get_all_additional_info_field')){
+	function get_all_additional_info_field($field) {
+		$CI =& get_instance();
+		if(user_info_count() == 0){
+			return '';
+		}
+		$CI->db->select("*");
+		$CI->db->from("user_addtional_info");
+		$CI->db->where("user_id",client_session_val());
+		$query = $CI->db->get()->result_array();
+		$val = current($query);
+		return ($val[$field]);
+	}
+}
+
+
+
+if(!function_exists('get_all_branch')){
+	function get_all_branch() {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("branch");
+
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+
+if(!function_exists('table_cruds')){
+	function table_cruds($post) {
+		$CI =& get_instance();
+		switch ($post['method']) {
+			case 'add':
+				$result = $CI->db->insert('official_scope', $post);
+				if($result){
+					return 1;
+				}else{
+					return 0;
+				}
+			break;
+
+			case 'edit':
+				$CI->db->where('official_scope_id', $post['official_scope_id']);
+				$query = $CI->db->update('official_scope', $data);
+				if($query){
+					return 1;
+				}else{
+					return 0;
+				}
+			
+			break;
+
+			case 'delete':
+				$CI->db->where('official_scope_id', $post['official_scope_id']);
+				$query = $CI->db->delete('official_scope');
+				if($query){
+					return 1;
+				}else{
+					return 0;
+				}
+			break;
+
+			case 'get_all':
+				$CI->db->select("*");
+				$CI->db->from("official_scope");
+				$query = $CI->db->get()->result_array();
+				return $query;
+		
+			break;
+
+			case 'get_all_num':
+				$CI->db->select("*");
+				$CI->db->from("official_scope");
+				$result = $CI->db->get();
+				return $result->num_rows();
+			
+			break;
+
+			case 'get_by_id':
+				$CI->db->select("*");
+				$CI->db->from("official_scope");
+				$CI->db->where('official_scope_id', $post['official_scope_id']);
+				$query = $CI->db->get()->result_array();
+				return current($query);
+			
+			break;
+			
+			default:
+			break;
+		}
+
+	}
+}
+
+if(!function_exists('user_username_count')){
+	function user_username_count($username) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("user");
+		$CI->db->where("username",$username);
+		$result = $CI->db->get();
+		return $result->num_rows();
+	}
+}
+
+if(!function_exists('apply_count')){
+	function apply_count() {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("apply_for_item_computation");
+		$CI->db->where("user_id",client_session_val());
+		$CI->db->where("is_payed",'0');
+		$result = $CI->db->get();
+		return $result->num_rows();
+	}
+}
+
+
+if(!function_exists('apply_count_id')){
+	function apply_count_id($apply_for_item_id) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("apply_for_item_computation");
+		$CI->db->where("apply_for_item_id",$apply_for_item_id);
+		$CI->db->where("is_payed",'0');
+		$result = $CI->db->get();
+		return $result->num_rows();
+	}
+}
+
+if(!function_exists('apply_count_id_foreach')){
+	function apply_count_id_foreach($apply_for_item_id) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("apply_for_item_computation");
+		$CI->db->where("apply_for_item_id",$apply_for_item_id);
+		$CI->db->where("is_payed",'0');
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+
+if(!function_exists('user_info_count')){
+	function user_info_count() {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("user_addtional_info");
+		$CI->db->where("user_id",client_session_val());
+		$result = $CI->db->get();
+		return $result->num_rows();
+	}
+}
+
+if(!function_exists('user_username_count_update')){
+	function user_username_count_update($username) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("user");
+		$CI->db->where("username",$username);
+		$CI->db->where("user_id<>",client_session_val());
+		$result = $CI->db->get();
+		return $result->num_rows();
+	}
+}
+
+if(!function_exists('update_date_data_apply')){
+	function update_date_data_apply($apply_for_item_id) {
+		$CI =& get_instance();
+		$arrayName = array(
+					'is_approved' 	=> '1',
+					'date_approved' => current_ph_date_time(),
+				);
+				$CI->db->where('apply_for_item_id', $apply_for_item_id);
+				$query = $CI->db->update('apply_for_item', $arrayName);
+				if($query){
+					return 1;
+				}else{
+					return 0;
+				}
+	}
+}
+
+
+if(!function_exists('product_function')){
+	function product_function($post) {
+		$CI =& get_instance();
+		switch ($post['method']) {
+			case 'add':
+				$arrayName = array(
+					'branch_id' => $post['branch_id'],
+					'prod_desc' => $post['prod_desc'],
+					'prod_name' => $post['prod_name'],
+					'prod_price' => $post['prod_price'],
+					'serial' => $post['serial'],
+					'image' => $post['image'],
+				);
+				$result = $CI->db->insert('product', $arrayName);
+				if($result){
+					return 1;
+				}else{
+					return 0;
+				}
+			break;
+
+			case 'edit':
+				$arrayName = array(
+					'branch_id' => $post['branch_id'],
+					// 'prod_desc' => $post['prod_desc'],
+					'prod_name' => $post['prod_name'],
+					'prod_price' => $post['prod_price'],
+					'serial' => $post['serial'],
+				);
+				$CI->db->where('prod_id', $post['prod_id']);
+				$query = $CI->db->update('product', $arrayName);
+				if($query){
+					return 1;
+				}else{
+					return 0;
+				}
+			
+			break;
+
+			case 'delete':
+				$CI->db->where('prod_id', $post['prod_id']);
+				$query = $CI->db->delete('product');
+				if($query){
+					return 1;
+				}else{
+					return 0;
+				}
+			break;
+
+			case 'get_all':
+				$CI->db->select("*");
+				$CI->db->from("product");
+				$query = $CI->db->get()->result_array();
+				return $query;
+		
+			break;
+
+			case 'get_all_num':
+				$CI->db->select("*");
+				$CI->db->from("product");
+				$result = $CI->db->get();
+				return $result->num_rows();
+			
+			break;
+
+			case 'get_by_id':
+				$CI->db->select("*");
+				$CI->db->from("product");
+				$CI->db->where('prod_id', $post['prod_id']);
+				$query = $CI->db->get()->result_array();
+				return current($query);
+			
+			break;
+			
+			default:
+			break;
+		}
+
+	}
+}
+
+if(!function_exists('user_function')){
+	function user_function($post) {
+		$CI =& get_instance();
+		switch ($post['method']) {
+			case 'add':
+				$arrayName = array(
+					'username' 				=> $post['username'],
+					'password' 				=> $post['password'],
+					'name' 					=> $post['name'],
+					'status' 				=> $post['status'],
+					'branch_id' 			=> $post['branch_id'],
+					'iden'					=> '0',
+				);
+				$result = $CI->db->insert('user', $arrayName);
+				if($result){
+					return 1;
+				}else{
+					return 0;
+				}
+			break;
+
+			case 'edit':
+				$arrayName = array(
+					'username' => $post['username'],
+					'password' => $post['password'],
+					'name' => $post['name'],
+					'status' => $post['status'],
+					'branch_id' => $post['branch_id'],
+					'iden'		=> '0',
+				);
+				$CI->db->where('user_id', $post['user_id']);
+				$query = $CI->db->update('user', $arrayName);
+				if($query){
+					return 1;
+				}else{
+					return 0;
+				}
+			
+			break;
+
+			case 'delete':
+				$CI->db->where('user_id', $post['user_id']);
+				$query = $CI->db->delete('user');
+				if($query){
+					return 1;
+				}else{
+					return 0;
+				}
+			break;
+
+			case 'get_all':
+				$CI->db->select("*");
+				$CI->db->from("user");
+				$query = $CI->db->get()->result_array();
+				return $query;
+		
+			break;
+
+			case 'get_all_num':
+				$CI->db->select("*");
+				$CI->db->from("user");
+				$result = $CI->db->get();
+				return $result->num_rows();
+			
+			break;
+
+			case 'get_by_id':
+				$CI->db->select("*");
+				$CI->db->from("user");
+				$CI->db->where('user_id', $post['user_id']);
+				$query = $CI->db->get()->result_array();
+				return current($query);
+			
+			break;
+			
+			default:
+			break;
+		}
+
+	}
+}
+
+
+if(!function_exists('current_ph_date_time')){
+	function current_ph_date_time(){
+		date_default_timezone_set("Asia/Manila");
+				return date("Y-m-d H:i:s");
+	}
+}
+
+if(!function_exists('current_ph_date')){
+	function current_ph_date(){
+		date_default_timezone_set("Asia/Manila");
+				return date("Y-m-d");
+	}
+}
+
+if(!function_exists('date_plus_month')){
+	function date_plus_month($months){
+		$data = strtotime(date("Y-m-d", strtotime(current_ph_date())) . "+".$months." month");
+		return date('Y-m-d', $data);
+	}
+}
+
+
+if(!function_exists('sendMail')){
+	function sendMail($data){
+
+		$CI =& get_instance();
+		$message = $CI->load->view('admin/email',$data,true);
+
+		$config = array(
+			// 'useragent' 	=> 'osau.com',
+			'protocol' 		=> 'smtp',
+			'smtp_host' 	=> 'smtp.hostinger.ph',
+			'smtp_port' 	=> 587,
+			'smtp_user' 	=> 'marcniel@cvsu-b-website.online',
+			'smtp_pass' 	=> 'P@s$w0rd123!',
+			'mailtype'  	=> 'html',
+			'wordwrap'  	=> TRUE,
+			'charset'   	=> 'utf-8',
+// 			'auth' 			=> TRUE
+		);
+
+		$CI->email->set_newline("\r\n");
+		$CI->email->initialize($config);
+		$CI->email->from($data['email'], global_page_function());
+		$CI->email->to( $data['email_to'] );
+
+		$CI->email->subject($data['subject']);
+		$CI->email->message( $message );
+		$CI->email->send();
+		return 1;
+	}
+}
+
+
+
