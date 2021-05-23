@@ -11,8 +11,8 @@
                         <th>Downpayment</th>
                         <th>Months</th>
                         <th>Bills Per Month</th>
-                        <th>Status</th>
                         <th>Message</th>
+                        <th>Status</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -32,6 +32,7 @@
                           <?php if($row['is_approved'] == '0'){ ?>
                             <a href="<?=base_url()?>Admin/approve?id=<?php echo $row['apply_for_item_id'];?>&email=<?php echo $row['email'];?>&name=<?php echo $row['name'];?>" class="btn btn-success">Approve</a>
                           <?php } ?>
+                          <a href="<?=base_url()?>Admin/records/<?php echo $row['apply_for_item_id'];?>" class="btn btn-default">Open</a>
                         </td>
                       </tr>
                    

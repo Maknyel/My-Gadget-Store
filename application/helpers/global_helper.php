@@ -188,7 +188,21 @@ if(!function_exists('manage_id_bill')){
 		$CI->db->select("apply_for_item.*,product.*");
 		$CI->db->from("apply_for_item");
 		$CI->db->join('product', 'apply_for_item.product_id = product.prod_id', 'inner');
-		$CI->db->where('apply_for_item.user_id',client_session_val());
+		$CI->db->where('apply_for_item.apply_for_item_id',$id);
+		$query = $CI->db->get()->result_array();
+		return current($query);
+	}
+}
+
+
+
+if(!function_exists('manage_id_bill_admin')){
+	function manage_id_bill_admin($id) {
+		$CI =& get_instance();
+		$CI->db->select("apply_for_item.*,product.*");
+		$CI->db->from("apply_for_item");
+		$CI->db->join('product', 'apply_for_item.product_id = product.prod_id', 'inner');
+		$CI->db->where('apply_for_item.apply_for_item_id',$id);
 		$query = $CI->db->get()->result_array();
 		return current($query);
 	}
@@ -469,6 +483,20 @@ if(!function_exists('product_function')){
 			break;
 		}
 
+	}
+}
+
+if(!function_exists('confirm_bill')){
+	function confirm_bill($post) {
+		$CI =& get_instance();
+				$arrayName = array('is_payed'=>'1');
+				$CI->db->where('apply_for_item_computation', $post['apply_for_item_computation']);
+				$query = $CI->db->update('apply_for_item_computation', $arrayName);
+				if($query){
+					return 1;
+				}else{
+					return 0;
+				}
 	}
 }
 

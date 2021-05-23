@@ -154,6 +154,13 @@ class Admin extends CI_Controller {
 		echo json_encode(product_function($post));
 	}
 
+    public function confirm_bill(){
+        $post = $this->input->post();
+        echo json_encode(confirm_bill($post));
+    }
+
+    
+
 	public function user_function(){
 		$post = $this->input->post();
 		echo json_encode(user_function($post));
@@ -268,6 +275,22 @@ class Admin extends CI_Controller {
             );
         }
         echo json_encode($result);
+    }
+
+    public function records($id){
+        admin_session_redirection();
+        $data = array(
+            'title'             => global_page_function(),
+            'page'              => 'Manage Bill',
+            'is_datatables'     => TRUE, 
+            'manage'            => manage_id_bill_admin($id),
+            'id'                => $id,
+            'get_data'          => $this->Main_model->apply_for_item_computation($id),
+        );
+        
+        $this->load->view("admin/global/header",$data);
+        $this->load->view("admin/manage_bill",$data);
+        $this->load->view("admin/global/footer",$data);
     }
 
 	
