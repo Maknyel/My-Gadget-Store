@@ -337,7 +337,7 @@ class CI_Email {
 	 * @see	CI_Email::$protocol
 	 * @var	string[]
 	 */
-	protected $_protocols		= array('mail', 'sendmail', 'smtp');
+	protected $_protocols		= array('mail', 'sendmail', 'sendmail');
 
 	/**
 	 * Base charsets

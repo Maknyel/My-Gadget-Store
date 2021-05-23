@@ -30,7 +30,7 @@
                         <td>
                           <!-- <a href="#updateordinance<?php echo $row['cust_id'];?>" data-target="#updateordinance<?php echo $row['cust_id'];?>" data-toggle="modal" class="small-box-footer"><i class="glyphicon glyphicon-edit text-orange"></i></a> -->
                           <?php if($row['is_approved'] == '0'){ ?>
-                            <a href="<?=base_url()?>Admin/approve?id=<?php echo $row['apply_for_item_id'];?>&email=<?php echo $row['email'];?>" class="btn btn-success">Approve</a>
+                            <a href="<?=base_url()?>Admin/approve?id=<?php echo $row['apply_for_item_id'];?>&email=<?php echo $row['email'];?>&name=<?php echo $row['name'];?>" class="btn btn-success">Approve</a>
                           <?php } ?>
                         </td>
                       </tr>

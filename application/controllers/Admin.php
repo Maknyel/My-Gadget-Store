@@ -121,7 +121,7 @@ class Admin extends CI_Controller {
         $get = $this->input->get();
         $val = update_date_data_apply($get['id']);
         if($val){
-            $content = "<p>Hi,</p>";
+            $content = "<p>Hi ".$get['name'].",</p>";
             $content .= "<p>Congratulations your loan has been approved by the administrator</p>";
             $data = array(
                 'content'           => $content,

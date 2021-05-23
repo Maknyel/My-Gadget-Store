@@ -5,21 +5,22 @@
     <div class="footer-top">
       <div class="container">
         <div class="row gy-4">
-          <div class="col-lg-5 col-md-12 footer-info">
-            <a href="index.html" class="logo d-flex align-items-center">
+          <div class="col-lg-12 col-md-12 footer-info">
+            <a href="<?=base_url()?>" class="logo d-flex align-items-center">
               <img src="<?=base_url()?>assets/user_template/img/logo.png" alt="">
-              <span>FlexStart</span>
+              <span><?=$title?></span>
             </a>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
-            <div class="social-links mt-3">
+            <h1>Terms and agreement</h1>
+            <p>Dear our beloved creditors, pleae be informed that this store needs your valid IDs and credentials for loaning. We will charged 13% interest per transaction minus from your downpayment. 100pesos will be charged automatically if you over lap in your date of payment. Once the item are not pay for 2 months, we will send you a memo letter, much worst you will go to jail. You cant loan two items a time. Only accepts cash and gcash payment. You need to send proof of payment like picture or screen shots and send it through the system. Once your balance is back to zero you can loan again. Thankyou</p>
+            <!-- <div class="social-links mt-3">
               <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
               <a href="#" class="instagram"><i class="bi bi-instagram bx bxl-instagram"></i></a>
               <a href="#" class="linkedin"><i class="bi bi-linkedin bx bxl-linkedin"></i></a>
-            </div>
+            </div> -->
           </div>
 
-          <div class="col-lg-2 col-6 footer-links">
+          <div class="col-lg-2 col-6 footer-links" style="display: none;">
             <h4>Useful Links</h4>
             <ul>
               <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
@@ -30,7 +31,7 @@
             </ul>
           </div>
 
-          <div class="col-lg-2 col-6 footer-links">
+          <div class="col-lg-2 col-6 footer-links" style="display: none;">
             <h4>Our Services</h4>
             <ul>
               <li><i class="bi bi-chevron-right"></i> <a href="#">Web Design</a></li>
@@ -41,7 +42,7 @@
             </ul>
           </div>
 
-          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start" style="display: none;">
             <h4>Contact Us</h4>
             <p>
               A108 Adam Street <br>
@@ -59,10 +60,7 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>FlexStart</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        &copy; Copyright <strong><span><?=$title?></span></strong>. All Rights Reserved <?=date('Y')?>
       </div>
     </div>
   </footer><!-- End Footer -->

@@ -1,7 +1,7 @@
 <?php
 if(!function_exists('global_page_function')){
 	function global_page_function() {
-		return 'Ahira';
+		return 'My Gadget Store';
 	}
 }
 
