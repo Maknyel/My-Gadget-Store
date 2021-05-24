@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
               <label>Downpayment:</label>
-              <input type="number" max="<?=$view_table['prod_price']?>" min="0" value="0" class="form-control" name="downpayment" id="downpayment" required="">
+              <input type="number" max="<?=$view_table['prod_price']?>" min="0" max="<?=$view_table['prod_price']?>" value="0" class="form-control" name="downpayment" id="downpayment" required="">
               <input type="hidden" value="<?=$view_table['prod_id']?>" class="form-control" name="product_id" id="product_id" required="">
             </div>
             <div class="form-group">
@@ -57,7 +57,11 @@
           <h2 data-aos="fade-up" data-aos-delay="400">Price: ₱<?=$view_table['prod_price']?></h2>
           <?php if(client_session_val()){ ?>
             <?php if(apply_count() == 0){ ?>
-              <h2 data-aos="fade-up" data-aos-delay="400"><button onclick="modal_function_show();" class="btn btn-primary" >Apply</button></h2>
+                <?php if(get_user_additional_info_field(client_session_val(),'is_verified') == 1){ ?>
+                  <?php if(apply_count_id_user_id(client_session_val()) == 0){ ?>
+                    <h2 data-aos="fade-up" data-aos-delay="400"><button onclick="modal_function_show();" class="btn btn-primary" >Apply</button></h2>
+                  <?php } ?>
+                <?php } ?>
             <?php } ?>
           <?php } ?>
           <!-- <h2 data-aos="fade-up" data-aos-delay="400"><?=computefor_house($view_table['prod_price'],1,3)?></h2> -->
@@ -152,7 +156,7 @@
       var interest = todivide + (todivide * .13);
       var toreturn = interest/$('#apply_form #total_months').val();
       $('#per_month_bill').val(toreturn); 
-      if(prod_total < $('#apply_form #downpayment').val()){
+      if(parseFloat(prod_total) < parseFloat($('#apply_form #downpayment').val())){
         $('#apply_form #downpayment').val(0);
         payment_per_month();
       }

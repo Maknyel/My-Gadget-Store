@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
               <label>Amount:</label>
-              <input type="number" min="0" value="0" class="form-control" name="downpayment" id="downpayment" required="">
+              <input type="number" step="0.01" min="0" value="0" class="form-control" name="downpayment" id="downpayment" required="">
               <input type="hidden" class="form-control" name="apply_for_item_computation" id="apply_for_item_computation" required="">
               <input type="hidden" name="image" id="image">
               <input type="hidden" name="apply_for_item_id" id="apply_for_item_id" value="<?=$id?>">
@@ -181,39 +181,46 @@
           dataString = $('#apply_form').serialize();
           var data = dataString;
           // alert(JSON.stringify(data));
-          if($('.modal-new-design #image').val(data['file_data']) == ''){
+          if($('.modal-new-design #image').val() == ''){
             alert_data('Error',"Please Upload Image");
+            $('#apply_form #apply_button').attr('disabled',false);
           }else{
-            $.ajax({
-              type:'POST',
-              dataType:'JSON',
-              url:`<?=base_url()?>`+'Main/bill_form',
-              data:data,
-              success:function(data)
-              {
-                if(data == 1){
-                    $('.modal-new-design').hide();
-                    var basedata = base_url+'manage_bill/<?=$id?>';
-                    alert_data('Success',"Please Wait for the email approval",basedata);
-                }else{
-                  $('#apply_form #apply_button').attr('disabled',false);
-                  alert_data('Error',"Invalid Request");
-                }
-              },
-              error: function(XMLHttpRequest, textStatus, errorThrown) {
-
-                  if (textStatus == 'timeout') {
-
-                  alert_data('Error','Timeout Error');
-
-                  } else {
-
-                  alert_data('Error','Network problem. Please try again');
-
+            if(parseFloat($('#apply_form #computation').val()) > parseFloat($('#apply_form #downpayment').val())){
+              alert_data('Error',"Amount is smaller than actual balance");
+              $('#apply_form #apply_button').attr('disabled',false);
+            }else{
+              $.ajax({
+                type:'POST',
+                dataType:'JSON',
+                url:`<?=base_url()?>`+'Main/bill_form',
+                data:data,
+                success:function(data)
+                {
+                  if(data == 1){
+                      $('.modal-new-design').hide();
+                      var basedata = base_url+'manage_bill/<?=$id?>';
+                      alert_data('Success',"Please Wait for the email approval",basedata);
+                  }else{
+                    $('#apply_form #apply_button').attr('disabled',false);
+                    alert_data('Error',"Invalid Request");
                   }
-                }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
 
-            });
+                    if (textStatus == 'timeout') {
+
+                    alert_data('Error','Timeout Error');
+
+                    } else {
+
+                    alert_data('Error','Network problem. Please try again');
+
+                    }
+                  }
+
+              });
+            }
+            
           }
             
         

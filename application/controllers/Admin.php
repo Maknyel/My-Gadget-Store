@@ -77,6 +77,21 @@ class Admin extends CI_Controller {
         echo json_encode($result);
 	}
 
+    
+    public function get_profile_user($id){
+        admin_session_redirection();
+        $data = array(
+            'title'             => global_page_function(),
+            'page'              => 'Profile',
+            'is_datatables'     => FALSE,
+            'id'                => $id
+        );
+        
+        $this->load->view("admin/global/header",$data);
+        $this->load->view("admin/get_profile_user",$data);
+        $this->load->view("admin/global/footer",$data);
+    }
+
 	public function application(){
 		admin_session_redirection();
 		$data = array(
@@ -127,11 +142,30 @@ class Admin extends CI_Controller {
                 'content'           => $content,
                 'email'             => 'noreply@gmail.com',
                 'email_to'          => $get['email'], 
-                'subject'           => 'testing',
+                'subject'           => 'Approve Loan',
             );
             
             sendmail($data);
             redirect(base_url().'admin/application', 'location');    
+        }
+        
+    }
+
+    public function verify_user(){
+        $get = $this->input->get();
+        $val = update_user_id($get['user_id']);
+        if($val){
+            $content = "<p>Hi ".$get['name'].",</p>";
+            $content .= "<p>Congratulations your account has been verified by the administrator</p>";
+            $data = array(
+                'content'           => $content,
+                'email'             => 'noreply@gmail.com',
+                'email_to'          => $get['email'], 
+                'subject'           => 'Verify Account',
+            );
+            
+            sendmail($data);
+            redirect(base_url().'admin/user', 'location');    
         }
         
     }

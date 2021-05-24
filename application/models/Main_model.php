@@ -88,7 +88,7 @@ class Main_model extends CI_Model
 	}
 
 	public function bill_form($post){
-		if($post['downpayment'] == $post['computation']){
+		// if($post['downpayment'] == $post['computation']){
 			$arrayName = array(
 						'proof_image' 					=> $post['image'],
 						'amount_payed' 					=> $post['downpayment'],
@@ -112,43 +112,43 @@ class Main_model extends CI_Model
 			}else{
 				return 0;
 			}
-		}else{
-				$arrayName = array(
-					'proof_image' 					=> $post['image'],
-					'amount_payed' 					=> $post['downpayment'],
-					'datetime_pay'					=> current_ph_date_time(),
-					'is_payed'						=> '2',
+		// }else{
+		// 		$arrayName = array(
+		// 			'proof_image' 					=> $post['image'],
+		// 			'amount_payed' 					=> $post['downpayment'],
+		// 			'datetime_pay'					=> current_ph_date_time(),
+		// 			'is_payed'						=> '2',
 					
-				);				
-				$this->db->where('apply_for_item_computation', $post['apply_for_item_computation']);
-				$result = $this->db->update('apply_for_item_computation', $arrayName);
+		// 		);				
+		// 		$this->db->where('apply_for_item_computation', $post['apply_for_item_computation']);
+		// 		$result = $this->db->update('apply_for_item_computation', $arrayName);
 
-			if($result){
-				if(apply_count_id($post['apply_for_item_id']) > 0){
-					foreach (apply_count_id_foreach($post['apply_for_item_id']) as $key => $value) {
-						$total_apply = apply_count_id($post['apply_for_item_id']);
-						$subtract = $post['downpayment'] - $post['computation'];
-						$subcompute = $subtract/$total_apply;
-						$arrayName2 = array(
-							'computation' 					=> $value['computation']-$subcompute,
-						);				
-						$this->db->where('apply_for_item_computation', $value['apply_for_item_computation']);
-						$result = $this->db->update('apply_for_item_computation', $arrayName2);						
-					}
-				}
-				if(apply_count_id($post['apply_for_item_id']) == 0){
-					$arrayName = array(
-						'is_ok'							=> '1',
+		// 	if($result){
+		// 		if(apply_count_id($post['apply_for_item_id']) > 0){
+		// 			foreach (apply_count_id_foreach($post['apply_for_item_id']) as $key => $value) {
+		// 				$total_apply = apply_count_id($post['apply_for_item_id']);
+		// 				$subtract = $post['downpayment'] - $post['computation'];
+		// 				$subcompute = $subtract/$total_apply;
+		// 				$arrayName2 = array(
+		// 					'computation' 					=> $value['computation']-$subcompute,
+		// 				);				
+		// 				$this->db->where('apply_for_item_computation', $value['apply_for_item_computation']);
+		// 				$result = $this->db->update('apply_for_item_computation', $arrayName2);						
+		// 			}
+		// 		}
+		// 		if(apply_count_id($post['apply_for_item_id']) == 0){
+		// 			$arrayName = array(
+		// 				'is_ok'							=> '1',
 					
-					);				
-					$this->db->where('apply_for_item_id', $post['apply_for_item_id']);
-					$result = $this->db->update('apply_for_item', $arrayName);
-				}
-				return 1;
-			}else{
-				return 0;
-			}
-		}
+		// 			);				
+		// 			$this->db->where('apply_for_item_id', $post['apply_for_item_id']);
+		// 			$result = $this->db->update('apply_for_item', $arrayName);
+		// 		}
+		// 		return 1;
+		// 	}else{
+		// 		return 0;
+		// 	}
+		// }
 		
 	}
 

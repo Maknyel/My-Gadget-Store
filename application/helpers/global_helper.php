@@ -61,6 +61,21 @@ if(!function_exists('get_user_data')){
 	}
 }
 
+
+if(!function_exists('get_user_data_admin')){
+	function get_user_data_admin($user_id,$field){
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->from('user');
+		$CI->db->where('user_id', $user_id);
+		$query = $CI->db->get()->result_array();
+		$query = current($query);
+
+		return ($query[$field]);
+
+	}
+}
+
 if (!function_exists('re_user_session_redirection')) {
 	function re_user_session_redirection(){
 		$CI =& get_instance();
@@ -125,6 +140,7 @@ if(!function_exists('get_all_user_data')){
 		$CI->db->select('user.*,branch.*');
 		$CI->db->from('user');
 		$CI->db->join('branch', 'user.branch_id = branch.branch_id', 'inner');
+		// $CI->db->where('branch_id','5');
 		$query = $CI->db->get()->result_array();
 	
 		return ($query);
@@ -167,6 +183,30 @@ if(!function_exists('get_all_product_ordered')){
 		return $query;
 	}
 }
+
+if(!function_exists('get_user_additional_info_field')){
+	function get_user_additional_info_field($user_id,$field) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("user_addtional_info");
+		$CI->db->where("user_id",$user_id);
+		$query = $CI->db->get()->result_array();
+		$val = current($query);
+		return ($val[$field]);
+	}
+}
+
+if(!function_exists('get_user_additional_info_field_count')){
+	function get_user_additional_info_field_count($user_id) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("user_addtional_info");
+		$CI->db->where("user_id",$user_id);
+		$result = $CI->db->get();
+		return $result->num_rows();
+	}
+}
+
 
 if(!function_exists('get_all_application')){
 	function get_all_application() {
@@ -219,6 +259,17 @@ if(!function_exists('get_all_my_ids')){
 	}
 }
 
+if(!function_exists('get_all_my_ids_admin')){
+	function get_all_my_ids_admin($user_id) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("customer_image");
+		$CI->db->where('user_id',$user_id);
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
 
 if(!function_exists('get_all_additional_info_field')){
 	function get_all_additional_info_field($field) {
@@ -229,6 +280,22 @@ if(!function_exists('get_all_additional_info_field')){
 		$CI->db->select("*");
 		$CI->db->from("user_addtional_info");
 		$CI->db->where("user_id",client_session_val());
+		$query = $CI->db->get()->result_array();
+		$val = current($query);
+		return ($val[$field]);
+	}
+}
+
+
+if(!function_exists('get_all_additional_info_field_view')){
+	function get_all_additional_info_field_view($user_id,$field) {
+		$CI =& get_instance();
+		if(user_info_count() == 0){
+			return '';
+		}
+		$CI->db->select("*");
+		$CI->db->from("user_addtional_info");
+		$CI->db->where("user_id",$user_id);
 		$query = $CI->db->get()->result_array();
 		$val = current($query);
 		return ($val[$field]);
@@ -351,6 +418,19 @@ if(!function_exists('apply_count_id')){
 	}
 }
 
+
+if(!function_exists('apply_count_id_user_id')){
+	function apply_count_id_user_id($user_id) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("apply_for_item_computation");
+		$CI->db->where("user_id",$user_id);
+		$CI->db->where("is_payed<>",'1');
+		$result = $CI->db->get();
+		return $result->num_rows();
+	}
+}
+
 if(!function_exists('apply_count_id_foreach')){
 	function apply_count_id_foreach($apply_for_item_id) {
 		$CI =& get_instance();
@@ -396,6 +476,23 @@ if(!function_exists('update_date_data_apply')){
 				);
 				$CI->db->where('apply_for_item_id', $apply_for_item_id);
 				$query = $CI->db->update('apply_for_item', $arrayName);
+				if($query){
+					return 1;
+				}else{
+					return 0;
+				}
+	}
+}
+
+
+if(!function_exists('update_user_id')){
+	function update_user_id($user_id) {
+		$CI =& get_instance();
+		$arrayName = array(
+					'is_verified' 	=> '1',
+				);
+				$CI->db->where('user_id', $user_id);
+				$query = $CI->db->update('user_addtional_info', $arrayName);
 				if($query){
 					return 1;
 				}else{
@@ -489,14 +586,39 @@ if(!function_exists('product_function')){
 if(!function_exists('confirm_bill')){
 	function confirm_bill($post) {
 		$CI =& get_instance();
-				$arrayName = array('is_payed'=>'1');
+		$arrayName = array('is_payed'=>'1');
+		$CI->db->where('apply_for_item_computation', $post['apply_for_item_computation']);
+		$query = $CI->db->update('apply_for_item_computation', $arrayName);
+		if($query){
+			$CI->db->select("*");
+				$CI->db->from("apply_for_item_computation");
 				$CI->db->where('apply_for_item_computation', $post['apply_for_item_computation']);
-				$query = $CI->db->update('apply_for_item_computation', $arrayName);
-				if($query){
+				$query100 = $CI->db->get()->result_array();
+				$beforedata = current($query100);
+
+			if($beforedata['amount_payed'] == $beforedata['computation']){
+				
+			}else{
+					
+					if(apply_count_id($beforedata['apply_for_item_id']) > 0){
+						foreach (apply_count_id_foreach($beforedata['apply_for_item_id']) as $key => $value) {
+							$total_apply = apply_count_id($beforedata['apply_for_item_id']);
+							$subtract = $beforedata['amount_payed'] - $beforedata['computation'];
+							$subcompute = $subtract/$total_apply;
+							$arrayName2 = array(
+								'computation' 					=> $value['computation']-$subcompute,
+							);				
+							$CI->db->where('apply_for_item_computation', $value['apply_for_item_computation']);
+							$result = $CI->db->update('apply_for_item_computation', $arrayName2);						
+						}
+					}
 					return 1;
-				}else{
-					return 0;
-				}
+				
+			}
+			return 1;
+		}else{
+			return 0;
+		}
 	}
 }
 

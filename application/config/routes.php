@@ -57,6 +57,7 @@ $route = array(
 	'manage_bill/(:num)'								=> 'Main/manage_bill/$1',
 	'profile'											=> 'Main/profile',
 	'view/(:num)'										=> 'Main/view/$1',
+	'admin/user_info/(:num)'							=> 'Admin/get_profile_user/$1',
 	'404_override'										=> '',
 	'translate_uri_dashes'								=> FALSE,
 

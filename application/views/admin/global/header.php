@@ -102,7 +102,7 @@
                     <!-- <li><a href = "payment_pen.php"><i class="fa fa-file"></i> Payment Pending<span class="fa fa-chevron-right"></span></a></li> -->
                     <li><a href = "<?=base_url()?>admin/branch"><i class="fa fa-building"></i> Product <span class="fa fa-chevron-right"></span></a></li>
                     <!-- <li><a href = "<?=base_url()?>admin/customer"><i class="fa fa-building"></i> Customer <span class="fa fa-chevron-right"></span></a></li> -->
-                    <li><a href = "<?=base_url()?>admin/user"><i class="fa fa-users"></i> User <span class="fa fa-chevron-right"></span></a></li>
+                    <li><a href = "<?=base_url()?>admin/user"><i class="fa fa-users"></i> Customer <span class="fa fa-chevron-right"></span></a></li>
                     <li><a href = "<?=base_url()?>admin/history"><i class="fa fa-history"></i> History Log <span class="fa fa-chevron-right"></span></a></li>                  
                   </ul>
                 </div>            
