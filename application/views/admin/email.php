@@ -187,7 +187,7 @@ max-width:100% !important;}}
 
                     
 <div style="color:#FBFBFB;line-height:180%;font-family:'Roboto', Tahoma, Verdana, Segoe, sans-serif;padding-right:10px;padding-left:10px;padding-top:20px;padding-bottom:15px;">
-  <div><p style="margin:0;font-size:12px;line-height:22px;text-align:right;">Loan Approved</p></div>
+  <div><p style="margin:0;font-size:12px;line-height:22px;text-align:right;"><?=$message_type?></p></div>
 </div>
 
 

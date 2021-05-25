@@ -178,6 +178,7 @@ class Admin extends CI_Controller {
                 'email'             => 'noreply@gmail.com',
                 'email_to'          => $get['email'], 
                 'subject'           => 'Approve Loan',
+                'message_type'      => 'Loan Approved',
             );
             
             sendmail($data);
@@ -197,6 +198,7 @@ class Admin extends CI_Controller {
                 'email'             => 'noreply@gmail.com',
                 'email_to'          => $get['email'], 
                 'subject'           => 'Verify Account',
+                'message_type'      => 'Account Verified',
             );
             
             sendmail($data);
