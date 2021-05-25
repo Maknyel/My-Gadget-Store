@@ -16,6 +16,41 @@ class Admin extends CI_Controller {
 		$this->load->view("admin/global/footer",$data);
 	}
 
+    public function getBarChartDataLastYear() {
+            $currentMonth = 12;
+
+            $newBarData = array();
+            $json = array();
+
+            for($x = 1; $x <= $currentMonth; $x++) {
+                if($x != '10' && $x != '11' && $x != '12'){
+                    $monthData = "0".$x;
+                } else {
+                    $monthData = $x;
+                }
+
+                $dateObj = DateTime::createFromFormat('!m', $x);
+                $monthName = $dateObj->format('M');
+
+                $dataArr = array(
+                                 $monthName,
+                                 _list_registered_users(date('Y')-1,$monthData),
+                                 _list_registered_users(date('Y'),$monthData)
+                                 );
+
+                array_push($newBarData, $dataArr);
+
+            }
+
+            foreach($newBarData as $key=>$value){
+                
+                $json[] = array('y'=> $newBarData[$key][0] , 'a' => $newBarData[$key][1], 'b' => $newBarData[$key][2]);
+            }
+
+
+            echo json_encode($json);
+        }
+
 	public function upload_file(){
 		$user_dir_resume    = './Product';
         if(!file_exists($user_dir_resume)){

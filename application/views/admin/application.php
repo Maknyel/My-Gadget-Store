@@ -32,7 +32,7 @@
                           <?php if($row['is_approved'] == '0'){ ?>
                             <a href="<?=base_url()?>Admin/approve?id=<?php echo $row['apply_for_item_id'];?>&email=<?php echo $row['email'];?>&name=<?php echo $row['name'];?>" class="btn btn-success">Approve</a>
                           <?php } ?>
-                          <a href="<?=base_url()?>Admin/records/<?php echo $row['apply_for_item_id'];?>" class="btn btn-default">Open</a>
+                          <a href="<?=base_url()?>Admin/records/<?php echo $row['apply_for_item_id'];?>" class="btn btn-<?=(count_apply_for_item_computation($row['apply_for_item_id']) > 0)?'danger':'default'?>"><span><?=count_apply_for_item_computation($row['apply_for_item_id'])?></span> Open</a>
                         </td>
                       </tr>
                    

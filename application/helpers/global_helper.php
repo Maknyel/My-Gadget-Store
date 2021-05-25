@@ -207,6 +207,85 @@ if(!function_exists('get_user_additional_info_field_count')){
 	}
 }
 
+if(!function_exists('count_dashboard_all')){
+	function count_dashboard_all($type) {
+		$CI =& get_instance();
+		switch ($type) {
+			case 'customer':
+				$CI->db->select("*");
+				$CI->db->from("user");
+				$CI->db->where("branch_id",'5');
+				$result = $CI->db->get();
+				return $result->num_rows();
+			break;
+
+			case 'verified':
+				$CI->db->select("*");
+				$CI->db->from("user");
+				$CI->db->join('user_addtional_info', 'user.user_id = user_addtional_info.user_id', 'inner');
+				$CI->db->where("user_addtional_info.is_verified",'1');
+				$result = $CI->db->get();
+				return $result->num_rows();
+			break;
+
+			case 'pending':
+				$CI->db->select("*");
+				$CI->db->from("user");
+				$CI->db->join('user_addtional_info', 'user.user_id = user_addtional_info.user_id', 'inner');
+				$CI->db->where("user_addtional_info.is_verified",'0');
+				$result = $CI->db->get();
+				return $result->num_rows();
+			break;
+
+			case 'product':
+				$CI->db->select("*");
+				$CI->db->from("product");
+				$result = $CI->db->get();
+				return $result->num_rows();
+			break;
+
+			case 'pending_product':
+				$CI->db->select("apply_for_item.*,product.*,user.*,user_addtional_info.*");
+				$CI->db->from("apply_for_item");
+				$CI->db->join('product', 'apply_for_item.product_id = product.prod_id', 'inner');
+				$CI->db->join('user', 'apply_for_item.user_id = user.user_id', 'inner');
+				$CI->db->join('user_addtional_info', 'apply_for_item.user_id = user_addtional_info.user_id', 'left');
+				$CI->db->where('apply_for_item.is_approved','0');
+				$result = $CI->db->get();
+				return $result->num_rows();
+			break;
+
+			case 'pending_product_payment':
+				$CI =& get_instance();
+				$CI->db->select("*");
+				$CI->db->from("apply_for_item_computation");
+				// $CI->db->where("apply_for_item_id",$apply_for_item_id);
+				$CI->db->where("is_payed",'2');
+				$result = $CI->db->get();
+				return $result->num_rows();
+			break;
+			
+			default:
+			break;
+		}
+		
+		
+	}
+}
+
+function _list_registered_users($year,$month)
+	{
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->from('apply_for_item');
+
+			$CI->db->where(array('date_added >=' => $year.'-'.$month.'-01', 'date_added <= '=> $year.'-'.$month.'31'));
+		
+		$query = $CI->db->get();
+		return $query->num_rows();
+		
+	}
+
 
 if(!function_exists('get_all_application')){
 	function get_all_application() {
@@ -388,6 +467,20 @@ if(!function_exists('user_username_count')){
 		$CI->db->select("*");
 		$CI->db->from("user");
 		$CI->db->where("username",$username);
+		$result = $CI->db->get();
+		return $result->num_rows();
+	}
+}
+
+
+
+if(!function_exists('count_apply_for_item_computation')){
+	function count_apply_for_item_computation($apply_for_item_id) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("apply_for_item_computation");
+		$CI->db->where("apply_for_item_id",$apply_for_item_id);
+		$CI->db->where("is_payed",'2');
 		$result = $CI->db->get();
 		return $result->num_rows();
 	}
