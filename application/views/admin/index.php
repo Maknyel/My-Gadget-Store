@@ -100,7 +100,7 @@
 	        <div class="inner">
 	            <h3 id="employer_total_count"><?=count_dashboard_all('pending_product_payment')?></h3>
 	            <p>
-	                Pending Applications
+	                Pending Payment
 	            </p>
 	        </div>
 	        <div class="icon">

@@ -279,7 +279,7 @@ function _list_registered_users($year,$month)
 		$CI->db->select('*');
 		$CI->db->from('apply_for_item');
 
-			$CI->db->where(array('date_added >=' => $year.'-'.$month.'-01', 'date_added <= '=> $year.'-'.$month.'31'));
+			$CI->db->where(array('YEAR(date_added)' => $year,'MONTH(date_added)'=> $month));
 		
 		$query = $CI->db->get();
 		return $query->num_rows();
@@ -536,6 +536,29 @@ if(!function_exists('apply_count_id_foreach')){
 	}
 }
 
+if(!function_exists('apply_count_id_foreach1')){
+	function apply_count_id_foreach1($apply_for_item_id) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("apply_for_item_computation");
+		$CI->db->where("apply_for_item_id",$apply_for_item_id);
+		$CI->db->where("is_payed<>",'1');
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+if(!function_exists('apply_count_id_foreach_loop')){
+	function apply_count_id_foreach_loop($apply_for_item_id) {
+		$CI =& get_instance();
+		$val = 0;
+		foreach (apply_count_id_foreach1($apply_for_item_id) as $key => $value) {
+			$val = $value['computation'] + $val;
+		}
+		return $val;
+	}
+}
+
 
 if(!function_exists('user_info_count')){
 	function user_info_count() {
@@ -679,6 +702,7 @@ if(!function_exists('product_function')){
 if(!function_exists('confirm_bill')){
 	function confirm_bill($post) {
 		$CI =& get_instance();
+		$countloop = apply_count_id_foreach_loop($post['apply_for_item_id']);
 		$arrayName = array('is_payed'=>'1');
 		$CI->db->where('apply_for_item_computation', $post['apply_for_item_computation']);
 		$query = $CI->db->update('apply_for_item_computation', $arrayName);
@@ -695,14 +719,33 @@ if(!function_exists('confirm_bill')){
 					
 					if(apply_count_id($beforedata['apply_for_item_id']) > 0){
 						foreach (apply_count_id_foreach($beforedata['apply_for_item_id']) as $key => $value) {
-							$total_apply = apply_count_id($beforedata['apply_for_item_id']);
-							$subtract = $beforedata['amount_payed'] - $beforedata['computation'];
-							$subcompute = $subtract/$total_apply;
-							$arrayName2 = array(
-								'computation' 					=> $value['computation']-$subcompute,
-							);				
-							$CI->db->where('apply_for_item_computation', $value['apply_for_item_computation']);
-							$result = $CI->db->update('apply_for_item_computation', $arrayName2);						
+								if($countloop <= $beforedata['amount_payed']){
+									$arrayName2 = array(
+										'computation' 					=> '0',
+										'is_payed'						=> '1',
+									);				
+									$CI->db->where('apply_for_item_computation', $value['apply_for_item_computation']);
+									$result = $CI->db->update('apply_for_item_computation', $arrayName2);
+
+									$arrayName2 = array(
+										'is_ok'							=> '1',
+									);				
+									$CI->db->where('apply_for_item_id', $beforedata['apply_for_item_id']);
+									$result = $CI->db->update('apply_for_item', $arrayName2);
+
+
+								}else{
+									$total_apply = apply_count_id($beforedata['apply_for_item_id']);
+									$subtract = $beforedata['amount_payed'] - $beforedata['computation'];
+									$subcompute = $subtract/$total_apply;
+									$arrayName2 = array(
+										'computation' 					=> $value['computation']-$subcompute,
+									);				
+									$CI->db->where('apply_for_item_computation', $value['apply_for_item_computation']);
+									$result = $CI->db->update('apply_for_item_computation', $arrayName2);
+									}
+														
+
 						}
 					}
 					return 1;

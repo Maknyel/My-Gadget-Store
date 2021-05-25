@@ -1,5 +1,5 @@
 <div class="modal-new-design">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="height: 100vh;overflow: auto;">
     
       <!-- Modal content-->
       <div class="modal-content">
@@ -59,8 +59,8 @@
                       <table class="table table-bordered" id="table_id">
                         <thead>  
                           <tr>
-                            <th>Amount</th>
                             <th>Date Must Pay</th>
+                            <th>Amount</th>
                             <th>Proof</th>
                             <th>Amount Payed</th>
                             <th>Date Payed</th>
@@ -69,17 +69,26 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <?php foreach ($get_data as $key => $value) { ?>
+
+                          <?php $i=0; foreach ($get_data as $key => $value) { ?>
                             <tr>
-                              <td>₱<?=$value['computation']?></td>
                               <td><?=$value['datetime_expected_to_pay']?></td>
-                              <td><?php if($value['proof_image'] != ''){ ?><img src="<?=base_url()?>Bill/<?=$value['apply_for_item_computation']?>/<?=$value['proof_image']?>" width="50px" height="auto"><?php } ?></td>
+                              <td>₱<?=$value['computation']?></td>
+                              <td><?php if($value['proof_image'] != ''){ ?><img onclick="window.open(`<?=base_url()?>Bill/<?=$value['apply_for_item_computation']?>/<?=$value['proof_image']?>`, 'hello', 'width=100%,height=auto');" src="<?=base_url()?>Bill/<?=$value['apply_for_item_computation']?>/<?=$value['proof_image']?>" width="50px" height="auto"><?php } ?></td>
                               <td><?=($value['amount_payed'] != '')?'₱'.$value['amount_payed']:''?></td>
                               <td><?=$value['datetime_pay']?></td>
                               <td><?=($value['is_payed'] == '1')?'Paid':(($value['is_payed'] == '2')?'Waiting to confirm':'Pending')?></td>
                               <td>
-                                <?php if($value['is_payed'] == 0){ ?>
-                                  <a href="#" class="btn btn-success" onclick="upload_file(`<?=$value['apply_for_item_computation']?>`,`<?=$value['computation']?>`);modal_function_show();">Pay</a>
+                                <?php if($value['is_payed'] == 0){ $i++; ?>
+                                  <?php if($i == 1){ ?>
+                                    <?php if($key > 0){ ?>
+                                      <?php if($get_data[$key-1]['is_payed'] != 2){ ?> 
+                                        <a href="#" class="btn btn-success" onclick="upload_file(`<?=$value['apply_for_item_computation']?>`,`<?=$value['computation']?>`);modal_function_show();">Pay</a>
+                                      <?php } ?>
+                                    <?php }else{ ?>
+                                      <a href="#" class="btn btn-success" onclick="upload_file(`<?=$value['apply_for_item_computation']?>`,`<?=$value['computation']?>`);modal_function_show();">Pay</a>
+                                    <?php } ?>
+                                  <?php } ?>
                                 <?php } ?>
                               </td>
                             </tr>
@@ -100,6 +109,17 @@
                       <p><b>Bill Per month: </b>₱<?=$manage['per_month_bill']?></p>
                       <p><b>Date Avail: </b><?=$manage['date_added']?></p>
                       <p><b>Status: </b><?=($manage['is_ok'] == '1')?'Finished':'Pending'?></p>
+                      <p><b>Balance: </b>
+                        <?php 
+                          $bal = 0;
+                          foreach ($get_data as $key => $value) {
+                            if($value['is_payed'] != 1){  
+                              $bal = $bal + $value['computation'];
+                            }
+                          }
+                          echo $bal;
+                        ?>
+                      </p>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                     </div>

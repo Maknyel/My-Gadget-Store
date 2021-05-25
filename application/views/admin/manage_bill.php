@@ -60,8 +60,8 @@
                             <table class="table table-bordered" id="table_id">
                               <thead>  
                                 <tr>
-                                  <th>Amount</th>
                                   <th>Date Must Pay</th>
+                                  <th>Amount</th>
                                   <th>Proof</th>
                                   <th>Amount Payed</th>
                                   <th>Date Payed</th>
@@ -72,15 +72,15 @@
                               <tbody>
                                 <?php foreach ($get_data as $key => $value) { ?>
                                   <tr>
-                                    <td>₱<?=$value['computation']?></td>
                                     <td><?=$value['datetime_expected_to_pay']?></td>
-                                    <td><?php if($value['proof_image'] != ''){ ?><img src="<?=base_url()?>Bill/<?=$value['apply_for_item_computation']?>/<?=$value['proof_image']?>" width="50px" height="auto"><?php } ?></td>
+                                    <td>₱<?=$value['computation']?></td>
+                                    <td><?php if($value['proof_image'] != ''){ ?><img onclick="window.open(`<?=base_url()?>Bill/<?=$value['apply_for_item_computation']?>/<?=$value['proof_image']?>`, 'hello', 'width=100%,height=auto');" src="<?=base_url()?>Bill/<?=$value['apply_for_item_computation']?>/<?=$value['proof_image']?>" width="50px" height="auto"><?php } ?></td>
                                     <td><?=($value['amount_payed'] != '')?'₱'.$value['amount_payed']:''?></td>
                                     <td><?=$value['datetime_pay']?></td>
                                     <td><?=($value['is_payed'] == '1')?'Paid':(($value['is_payed'] == '2')?'Waiting to confirm':'Pending')?></td>
                                     <td>
                                       <?php if($value['is_payed'] == 2){ ?>
-                                        <a href="#" class="btn btn-success" onclick="confirm_function(`<?=$value['apply_for_item_computation']?>`);">Confirm</a>
+                                        <a href="#" class="btn btn-success" onclick="confirm_function(`<?=$value['apply_for_item_computation']?>`,`<?=$value['apply_for_item_id']?>`);">Confirm</a>
                                       <?php } ?>
                                     </td>
                                   </tr>
@@ -101,6 +101,17 @@
                             <p><b>Bill Per month: </b>₱<?=$manage['per_month_bill']?></p>
                             <p><b>Date Avail: </b><?=$manage['date_added']?></p>
                             <p><b>Status: </b><?=($manage['is_ok'] == '1')?'Finished':'Pending'?></p>
+                            <p><b>Balance: </b>
+                            <?php 
+                              $bal = 0;
+                              foreach ($get_data as $key => $value) {
+                                if($value['is_payed'] != 1){  
+                                  $bal = $bal + $value['computation'];
+                                }
+                              }
+                              echo $bal;
+                            ?>
+                          </p>
                           </div><!-- /.box-header -->
                           <div class="box-body">
                           </div>
@@ -117,13 +128,13 @@
         </section><!-- End Hero -->
 
         <script type="text/javascript">
-          function confirm_function(apply_for_item_computation){
+          function confirm_function(apply_for_item_computation,apply_for_item_id){
             if(confirm("Are you sure you want to confirm this bill?")){
                 $.ajax({
                     type:'POST',
                     dataType:'JSON',
                     url:`<?=base_url()?>`+'Admin/confirm_bill',
-                    data:{'apply_for_item_computation':apply_for_item_computation},
+                    data:{'apply_for_item_computation':apply_for_item_computation,'apply_for_item_id':apply_for_item_id},
                     success:function(data)
                     {
                       if(data == 1){

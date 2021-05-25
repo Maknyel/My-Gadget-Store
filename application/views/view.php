@@ -1,18 +1,30 @@
 
 <!-- Modal -->
   <div class="modal-new-design">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="overflow: auto;height: 100vh;">
     
       <!-- Modal content-->
       <div class="modal-content">
+        <form style="display:none" id="uploadForm" method="POST" enctype="multipart/form-data">
+                        <input type="file" name ="file" id="file" accept="image/*">
+                    </form>
         <form id="apply_form">
           <div class="modal-header">
             <h4 class="modal-title">Apply</h4>
           </div>
           <div class="modal-body">
             <div class="form-group">
+              <label class="">Upload Image</label>
+              
+                <img src="" id="img_only" height="auto" width="100%">
+                <div style="text-align: center;width:100%;">
+                  <button type="button" class="btn btn-primary" id="upload_file">Upload Image</button>
+                </div>
+            </div>
+            <div class="form-group">
               <label>Total Payment:</label>
               <input type="text" value="<?=$view_table['prod_price']?>" class="form-control" name="total_payment" id="total_payment" required="" readonly="">
+              <input type="hidden" name="proof_image" id="proof_image">
             </div>
             <div class="form-group">
               <label>Downpayment:</label>
@@ -104,12 +116,69 @@
 
 
 <script type="text/javascript">
+  $('#upload_file').click(function(){
+      $('#file').click();
+    });
+    $(document).on('change','#file', function(){
+
+          upload();
+    });
+
+    function upload(){
+        var form = $('#uploadForm')[0];
+
+        // Create an FormData object
+        var dataString = new FormData(form);
+
+        // alert(dataString);
+            var uploadtracing = $('#uploadForm');
+            $.ajax({
+              type:'POST',
+              dataType: "json",
+              data: dataString,
+              enctype: 'multipart/form-data',
+              processData: false,
+              contentType: false,
+              cache: false,
+              // timeout: 600000,
+              url: base_url+"Main/upload_bill_testing/"+`<?=$view_table['prod_id']?>`,
+              beforeSubmit: function(data){
+               
+              },
+              uploadProgress: function (event, position, total, progress){
+              },
+              success: function(data){
+                  if(data.status !== 'success'){
+
+                    if (data.msg == "<p>The filetype you are attempting to upload is not allowed.</p>") {
+                        var pop_msg = "<p>"+'Invalid file type upload files in PDF, or mp4 format only'+"</p>";
+                    }else{
+                        var pop_msg = data.msg;
+                    }
+
+                    alert_data('Error',pop_msg);
+
+
+                } else {
+                  $('.modal-new-design #img_only').attr('src',data['path']);
+                    $('.modal-new-design #proof_image').val(data['file_data']);
+                }
+
+              },
+              resetForm: true
+            });
+
+    }
     $(document).on('submit', '#apply_form', function(event){
           event.preventDefault();
           $('#apply_form #apply_button').attr('disabled',true);
           dataString = $('#apply_form').serialize();
           var data = dataString;
           // alert(JSON.stringify(data));
+          if($('#apply_form #proof_image').val() == ''){
+            alert_data('Error',"Please Upload Image");
+            $('#apply_form #apply_button').attr('disabled',false);
+          }else{
             $.ajax({
               type:'POST',
               dataType:'JSON',
@@ -140,6 +209,8 @@
                 }
 
             });
+          }
+            
         
     });
     $(document).on('change keyup','#apply_form #downpayment', function(){

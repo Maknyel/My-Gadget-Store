@@ -13,6 +13,7 @@
                         <th>Bills Per Month</th>
                         <th>Message</th>
                         <th>Status</th>
+                        <th>Proof</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -27,6 +28,13 @@
                         <td><?php echo $row['per_month_bill'];?></td>
                         <td><?php echo $row['message'];?></td>
                         <td><?php echo ($row['is_approved'] == '1')?'Approved':'Pending';?></td>
+                        <td>
+                          <?php if($row['proof_image'] != ''){ ?>
+                            <img height="auto" onclick="window.open(`<?=base_url()?>Bill_view/<?=$row['product_id']?>/<?=$row['proof_image']?>`, 'hello', 'width=100%,height=auto');" width="100%" src="<?=base_url()?>Bill_view/<?=$row['product_id']?>/<?=$row['proof_image']?>">
+                          <?php }else{ ?>
+                            No Image Uploaded
+                          <?php } ?>
+                        </td>
                         <td>
                           <!-- <a href="#updateordinance<?php echo $row['cust_id'];?>" data-target="#updateordinance<?php echo $row['cust_id'];?>" data-toggle="modal" class="small-box-footer"><i class="glyphicon glyphicon-edit text-orange"></i></a> -->
                           <?php if($row['is_approved'] == '0'){ ?>

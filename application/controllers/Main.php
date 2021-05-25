@@ -297,5 +297,71 @@ class Main extends CI_Controller {
             );
         }
         echo json_encode($result);
+	}
+
+	public function upload_bill_testing($id){
+		$user_dir_resume    = './Bill_view';
+        if(!file_exists($user_dir_resume)){
+            mkdir( $user_dir_resume, 0755 );
+        }
+
+        $user_dir_resume2    = './Bill_view/'.$id;
+        if(!file_exists($user_dir_resume2)){
+            mkdir( $user_dir_resume2, 0755 );
+        }
+
+        $file_path = './Bill_view/'.$id.'/';
+
+        //Upload Config
+        $config['upload_path'] = $file_path;
+        $config['allowed_types'] = 'png|jpeg|jpg';//'png|jpeg|jpg';
+        $config['max_filename'] = '255';
+        $config['encrypt_name'] = TRUE;
+
+        $this->upload->initialize($config);
+
+        if (isset($_FILES['file']['name'])) {
+
+            if (0 < $_FILES['file']['error']) {
+                $result = array(
+                    'status'    => 'error',
+                    'msg'       => 'Error occured during file upload.',
+                    'file_data' => ''
+                );
+            } else {
+                if (file_exists($file_path. $_FILES['file']['name'])) {
+                    $result = array(
+                        'status'    => 'existing',
+                        'msg'       => 'File already exists.',
+                        'file_data' => ''
+                    );
+                } else {
+
+                    if (!$this->upload->do_upload('file')) {
+                        $result = array(
+                            'status'    => 'error',
+                            'msg'       => $this->upload->display_errors(),
+                            'file_data' => ''
+                        );
+                    } else {
+
+                        
+                        $upload_data = $this->upload->data();
+                        $result = array(
+                            'status'    => 'success',
+                            'path'       => base_url().'Bill_view/'.$id.'/'.$upload_data['file_name'],
+                            'file_data' => $upload_data['file_name'],
+                        );
+                    }
+                }
+            }
+        } else {
+            $result = array(
+                'status'    => 'blank',
+                'msg'       => 'Please choose a file.',
+                'file_data' => ''
+            );
+        }
+        echo json_encode($result);
 	}	
 }

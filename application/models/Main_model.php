@@ -65,6 +65,7 @@ class Main_model extends CI_Model
 				'is_approved'		=> '0',
 				'date_added'		=> current_ph_date_time(),
 				'user_id'			=> client_session_val(),
+				'proof_image'		=> $post['proof_image']
 			);
 			$result = $this->db->insert('apply_for_item', $arrayName);
 			$id = $this->db->insert_id();
