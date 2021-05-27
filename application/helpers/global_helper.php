@@ -186,7 +186,30 @@ if(!function_exists('get_all_product_ordered')){
 
 if(!function_exists('global_icon')){
 	function global_icon() {
-		return base_url().'assets/user_template/img/footer-bg.png';
+		return base_url().'assets/icon.png';
+	}
+}
+
+if(!function_exists('practice')){
+	function practice() {
+		$arrayName = array(
+			'SSS','UMID','PRC','Driver&apos;s license','Driver&apos;s license','Passport','TIN ID'
+		);
+
+		return $arrayName;
+
+	}
+}
+
+
+if(!function_exists('practice1')){
+	function practice1() {
+		$arrayName = array(
+			'Bank account statement','Company ID','PAGIBIG/HDMF ID','Remittance Slip','Brgy. Certificate/Clearance','Electric bill','PhilHealth ID','Salary Slip','Certificate of Employment','Mobile phone bill','Phone bill','NBI Clearance','Water bill','Postal ID'
+		);
+
+		return $arrayName;
+
 	}
 }
 

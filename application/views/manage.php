@@ -348,9 +348,9 @@
             Swal.showValidationMessage(`Please enter product_id`);
           }
 
-          else if (!message) {
-            Swal.showValidationMessage(`Please enter message`);
-          }
+          // else if (!message) {
+          //   Swal.showValidationMessage(`Please enter message`);
+          // }
 
           else if (!per_month_bill) {
             Swal.showValidationMessage(`Please enter per month bill`);
@@ -414,7 +414,7 @@
     function payment_per_month(){
       var prod_total = $('#apply_form2 #total_payment').val();
       var todivide = $('#apply_form2 #total_payment').val() - $('#apply_form2 #downpayment').val();
-      var interest = todivide + (todivide * .13);
+      var interest = todivide + (todivide * ($('#apply_form2 #total_months').val()/100));
       var toreturn = interest/$('#apply_form2 #total_months').val();
       $('#per_month_bill').val(toreturn); 
       if(parseFloat(prod_total) < parseFloat($('#apply_form2 #downpayment').val())){

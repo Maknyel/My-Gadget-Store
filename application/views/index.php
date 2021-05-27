@@ -11,31 +11,33 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <div style="height: 100px;"></div>
+          
+
+
           <h1 data-aos="fade-up">How to loan?</h1>
           <ul>
-            <li><h2 data-aos="fade-up" data-aos-delay="400">You must need valid IDs and another credential for loaning like payslip, meralco bill and etc.</h2></li>
-            <li><h2 data-aos="fade-up" data-aos-delay="400">Once your account is approved, you can choose between our available items. You can note your specific items in terms of specs like color, sizes and etc.</h2></li>
+            <li><h2 data-aos="fade-up" data-aos-delay="400">You must need valid IDs and another credential for loaning like payslip, electric bill and etc.</h2></li>
+            <li><h2 data-aos="fade-up" data-aos-delay="400">Once your account is approved, you can apply for your item loaning and wait for the admin approval</h2></li>
+            <li><h2 data-aos="fade-up" data-aos-delay="400">Once your item loaning is approved, you can proceed to downpayment, send your proof of payment and wait for admin approval</h2></li>
+            <li><h2 data-aos="fade-up" data-aos-delay="400">Once your down payment is approved, admin will give you the item or will deliver at you current address</h2></li>
+            <li><h2 data-aos="fade-up" data-aos-delay="400">Split the remaining balance into monthly installments</h2></li>
           </ul>
           
           
         </div>
-        <!-- <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200"> -->
-          <!-- <img src="<?=base_url()?>assets/user_template/img/hero-img.png" class="img-fluid" alt=""> -->
-        <!-- </div> -->
+        <div class="col-lg-6 hero-img" style="display:flex;align-items: center;" data-aos="zoom-out" data-aos-delay="200">
+          <img src="<?=global_icon()?>" class="img-fluid" alt="">
+        </div>
       </div>
     </div>
 
   </section><!-- End Hero -->
 
+
+
   <main id="main">
  
-
-
-
-
-
-
-
     <!-- ======= Portfolio Section ======= -->
     <section id="portfolio" class="portfolio">
 
@@ -78,6 +80,57 @@
       </div>
 
     </section><!-- End Portfolio Section -->
+
+    <section id="infos" class="infos">
+
+      <div class="container" data-aos="fade-up">
+        <header class="section-header">
+          <p>What documents to bring?</p>
+        </header>
+        <div class="text-center">
+          <ul>
+            <li><i class="fa fa-check" aria-hidden="true"></i> You only need to bring at least 2 valid IDs</li>
+            <li><i class="fa fa-check" aria-hidden="true"></i> At least 1 must be a primary ID</li>
+            <li><i class="fa fa-check" aria-hidden="true"></i> At least 1 must contain your current address</li>
+          </ul>
+          <div class="row">
+            <p class="pdesign">Primary IDs</p>
+            <?php foreach (practice() as $value) { ?>
+              <div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <div class="boxme">
+                  <div class="boxcontent">
+                    <div class="iconclass">
+                      <i class="fa fa-id-card" aria-hidden="true"></i>
+                    </div>
+                    <div class="">
+                      <?=$value?>
+                    </div>  
+                      
+                  </div>
+                </div>
+              </div>
+            <?php } ?>
+              
+          </div>
+          <div class="row">
+            <p class="pdesign">Secondary IDs</p>
+            <?php foreach (practice1() as $value) { ?>
+              <div class="col-12 col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                <div class="boxme1" style="text-align: left">
+                  <div class="boxcontent">
+                      <i class="fa fa-check" aria-hidden="true"></i>
+                      <?=$value?>
+                      
+                  </div>
+                </div>
+              </div>
+            <?php } ?>
+              
+          </div>
+
+        </div>
+      </div>
+    </section>
 
 
 

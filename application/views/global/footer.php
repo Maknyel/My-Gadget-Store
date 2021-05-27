@@ -18,6 +18,13 @@
               <a href="#" class="instagram"><i class="bi bi-instagram bx bxl-instagram"></i></a>
               <a href="#" class="linkedin"><i class="bi bi-linkedin bx bxl-linkedin"></i></a>
             </div> -->
+
+            <div style="height: 20px"></div>
+            <h1 data-aos="fade-up">About Us</h1>
+          
+            <p>Mr. Niel Lopez us the owner of the store. Store was established 3 years ago at Arellano Street Lessandra Heights Molino IV, Bacoor Cavite</p>
+            <p>Store gives interest based on terms choosed, 3mos (3%), 6mos (6%), 9mos (9%), 12mos (12%)</p>
+            <p>100 pesos penalty for late payment</p>
           </div>
 
           <div class="col-lg-2 col-6 footer-links" style="display: none;">
@@ -106,3 +113,28 @@ function alert_data(title,content,redirect){
         });
   }
 </script>
+
+<style type="text/css">
+  .boxme {
+      background-color: rgb(255, 255, 255);
+      border: 1px solid #F4F4F4;
+      border-radius: 10px;
+      box-shadow: 0 3px 15px 0 rgb(206 206 206 / 50%);
+      padding: 1.25em;
+      margin: 10px;
+  }
+
+  .iconclass{
+    font-size: 50px;
+  }
+
+  .pdesign{
+    font-size: 30px;
+    background: white;
+    
+  }
+
+  ul{
+    list-style: none;
+  }
+</style>

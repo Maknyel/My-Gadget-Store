@@ -117,7 +117,7 @@
           <div class="modal-header">
             <h4 class="modal-title">Apply</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" style="height: 100vh;overflow: auto;">
             <div class="form-group">
               <label>Item Name:</label>
               <input type="text" class="form-control" name="item_name" id="item_name">
