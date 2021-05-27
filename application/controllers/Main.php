@@ -235,6 +235,40 @@ class Main extends CI_Controller {
         } 
     }
 
+    function dragDropUpload_with_token($id){ 
+        if(!empty($_FILES)){ 
+            // File upload configuration 
+            $user_dir_resume    = './User';
+	        if(!file_exists($user_dir_resume)){
+	            mkdir( $user_dir_resume, 0755 );
+	        }
+
+	        $user_dir_resume    = './User/'.$id;
+	        if(!file_exists($user_dir_resume)){
+	            mkdir( $user_dir_resume, 0755 );
+	        }
+            $uploadPath = 'User/'.$id.'/'; 
+            $config['upload_path'] = $uploadPath; 
+            // $config['allowed_types'] = '*'; 
+            $config['allowed_types']        = 'gif|jpg|png';
+             
+            // Load and initialize upload library 
+            $this->load->library('upload', $config); 
+            $this->upload->initialize($config); 
+             
+            // Upload file to the server 
+            if($this->upload->do_upload('file')){ 
+                $fileData = $this->upload->data(); 
+                $uploadData['image_name'] = $fileData['file_name']; 
+                $uploadData['image_date'] = current_ph_date_time();
+                $uploadData['token_id'] = $id; 
+                 
+                // Insert files info into the database 
+                $insert = $this->Main_model->insert_image($uploadData); 
+            } 
+        } 
+    }
+
 
     public function upload_bill($id){
 		$user_dir_resume    = './Bill';

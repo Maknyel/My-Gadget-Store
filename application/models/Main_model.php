@@ -25,6 +25,8 @@ class Main_model extends CI_Model
 	}
 
 	public function register_submit($post){
+		
+
 		if(user_username_count($post['username']) == 0){
 			$arrayName = array(
 				'username' 			=> $post['username'],
@@ -35,6 +37,30 @@ class Main_model extends CI_Model
 			);
 			$result = $this->db->insert('user', $arrayName);
 			$id = $this->db->insert_id();
+
+			$user_dir_resume    = './User';
+	        if(!file_exists($user_dir_resume)){
+	            mkdir( $user_dir_resume, 0755 );
+	        }
+
+	        $user_dir_resume    = './User/'.$id;
+	        if(!file_exists($user_dir_resume)){
+	            mkdir( $user_dir_resume, 0755 );
+	        }
+
+			foreach (get_user_data_image($post['token_id']) as $key => $value) {
+				copy('./User/'.$post['token_id'].'/'.$value['image_name'], './User/'.$id.'/'.$value['image_name']);	
+				unlink('./User/'.$post['token_id'].'/'.$value['image_name']);
+			}
+			
+			
+			$arrayName = array(
+				'user_id'					=> $id,
+				'token_id'					=> $post['token_id'],			
+			);
+
+			$this->db->where('token_id', $post['token_id']);
+			$result = $this->db->update('customer_image', $arrayName);
 			if($result){
 				$arrayName = array(
 					'email' 				=> $post['email'],

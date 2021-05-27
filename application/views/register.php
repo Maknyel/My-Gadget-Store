@@ -9,10 +9,16 @@
           <div class="login-box-body">
             <!-- <h1 data-aos="fade-up">Register Form</h1> -->
             <!-- <div style="height: 100px;"></div> -->
-            
+            <?php $token = sha1(mt_rand(1, 90000) . 'SALT'); ?>
+
             <div class="box box-primary">
                 <div class="box-header with-border">
                   <h3 class="box-title">Register Form</h3>
+                </div>
+                <h3 class="box-title">Valid Id's</h3>
+                  <div class="card-body">
+                    <form action="<?php echo base_url(); ?>Main/dragDropUpload_with_token/<?=$token?>" class="dropzone"></form>
+                  </div>
                 </div>
                 <div class="box-body">
                   <!-- Date range -->
@@ -21,7 +27,8 @@
                     <div class="col-md-4">
                       <label for="email">Fullname</label>
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control" placeholder="Fullname" name="name" id="name" required="">                
+                        <input type="text" class="form-control" placeholder="Fullname" name="name" id="name" required="">
+                        <input type="hidden" value="<?=$token?>" class="form-control" name="token_id" id="token_id" required="">                
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -33,7 +40,7 @@
                     <div class="col-md-4">
                       <label for="email">Password</label>
                       <div class="form-group has-feedback">
-                        <input type="password" class="form-control" placeholder="Password" name="password" id="password" required="">
+                        <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Password" name="password" id="password" required="">
                       </div>
                     </div>
                   </div>

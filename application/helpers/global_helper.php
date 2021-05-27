@@ -62,6 +62,33 @@ if(!function_exists('get_user_data')){
 }
 
 
+if(!function_exists('get_user_pending_item')){
+	function get_user_pending_item(){
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->from('pending_item');
+		$CI->db->where('user_id', client_session_val());
+		$CI->db->where('is_verified<>', '1');
+		$result = $CI->db->get();
+		return $result->num_rows();
+
+	}
+}
+
+if(!function_exists('get_user_data_image')){
+	function get_user_data_image($token_id){
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->from('customer_image');
+		$CI->db->where('token_id', $token_id);
+		$query = $CI->db->get()->result_array();
+		
+		return ($query);
+
+	}
+}
+
+
 if(!function_exists('get_user_data_admin')){
 	function get_user_data_admin($user_id,$field){
 		$CI =& get_instance();

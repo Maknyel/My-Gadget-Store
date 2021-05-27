@@ -121,7 +121,11 @@
             <div class="container" data-aos="fade-up">
               <div class="box box-primary">
                 <div class="" style="width: 100%;text-align: right;">
-                  <a href="#" class="btn btn-info" onclick="modal_function_show();">Add</a>
+                  <?php if(get_user_pending_item() == 0){ ?>
+                    <?php if(apply_count_id_user_id(client_session_val()) == 0){ ?>
+                      <a href="#" class="btn btn-info" onclick="modal_function_show();">Add</a>
+                    <?php } ?>
+                  <?php } ?>
                 </div>
                 <div class="box-header with-border">
                   <?php
