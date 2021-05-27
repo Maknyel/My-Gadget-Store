@@ -73,12 +73,15 @@ class Main extends CI_Controller {
 	public function register_submit(){
 
 		$post = $this->input->post();
-		$data = array(
-			'username' 			=> $post['username'],
-			'password'			=> $post['password'],
-			'name'				=> $post['name'],
-		);
-		$val = $this->Main_model->register_submit($data);
+		$val = $this->Main_model->register_submit($post);
+				echo json_encode($val);
+			
+	}
+
+	public function add_pending(){
+
+		$post = $this->input->post();
+		$val = $this->Main_model->add_pending($post);
 				echo json_encode($val);
 			
 	}
@@ -284,6 +287,72 @@ class Main extends CI_Controller {
                         $result = array(
                             'status'    => 'success',
                             'path'       => base_url().'Bill/'.$id.'/'.$upload_data['file_name'],
+                            'file_data' => $upload_data['file_name'],
+                        );
+                    }
+                }
+            }
+        } else {
+            $result = array(
+                'status'    => 'blank',
+                'msg'       => 'Please choose a file.',
+                'file_data' => ''
+            );
+        }
+        echo json_encode($result);
+	}
+
+	public function upload_bill_file($id){
+		$user_dir_resume    = './pending_upload';
+        if(!file_exists($user_dir_resume)){
+            mkdir( $user_dir_resume, 0755 );
+        }
+
+        $user_dir_resume2    = './pending_upload/'.$id;
+        if(!file_exists($user_dir_resume2)){
+            mkdir( $user_dir_resume2, 0755 );
+        }
+
+        $file_path = './pending_upload/'.$id.'/';
+
+        //Upload Config
+        $config['upload_path'] = $file_path;
+        $config['allowed_types'] = 'png|jpeg|jpg';//'png|jpeg|jpg';
+        $config['max_filename'] = '255';
+        $config['encrypt_name'] = TRUE;
+
+        $this->upload->initialize($config);
+
+        if (isset($_FILES['file']['name'])) {
+
+            if (0 < $_FILES['file']['error']) {
+                $result = array(
+                    'status'    => 'error',
+                    'msg'       => 'Error occured during file upload.',
+                    'file_data' => ''
+                );
+            } else {
+                if (file_exists($file_path. $_FILES['file']['name'])) {
+                    $result = array(
+                        'status'    => 'existing',
+                        'msg'       => 'File already exists.',
+                        'file_data' => ''
+                    );
+                } else {
+
+                    if (!$this->upload->do_upload('file')) {
+                        $result = array(
+                            'status'    => 'error',
+                            'msg'       => $this->upload->display_errors(),
+                            'file_data' => ''
+                        );
+                    } else {
+
+                        
+                        $upload_data = $this->upload->data();
+                        $result = array(
+                            'status'    => 'success',
+                            'path'       => base_url().'pending_upload/'.$id.'/'.$upload_data['file_name'],
                             'file_data' => $upload_data['file_name'],
                         );
                     }

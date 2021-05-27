@@ -34,7 +34,32 @@ class Main_model extends CI_Model
 				'status'			=> 'active',
 			);
 			$result = $this->db->insert('user', $arrayName);
+			$id = $this->db->insert_id();
 			if($result){
+				$arrayName = array(
+					'email' 				=> $post['email'],
+					'birthdate' 			=> $post['birthdate'],
+					'contact' 				=> $post['contact'],
+					'address' 				=> $post['address'],
+					'house_status' 			=> $post['house_status'],
+					'years' 				=> $post['years'],
+					'rent' 				    => $post['rent'],
+					'emp_name' 				=> $post['emp_name'],
+					'emp_no' 				=> $post['emp_no'],
+					'emp_address' 			=> $post['emp_address'],
+					'emp_year' 				=> $post['emp_year'],
+					'occupation' 			=> $post['occupation'],
+					'salary' 				=> $post['salary'],
+					'spouse' 				=> $post['spouse'],
+					'spouse_no' 			=> $post['spouse_no'],
+					'spouse_emp' 			=> $post['spouse_emp'],
+					'spouse_details' 		=> $post['spouse_details'],
+					'spouse_income' 		=> $post['spouse_income'],
+					'comaker' 				=> $post['comaker'],
+					'comaker_details' 		=> $post['comaker_details'],
+					'user_id'				=> $id,
+				);
+				$result = $this->db->insert('user_addtional_info', $arrayName);
 				return 1;
 			}else{
 				return 0;
@@ -54,7 +79,30 @@ class Main_model extends CI_Model
 		
 	}
 
+	public function add_pending($post){
+		$data = array(
+			'message'					=> $post['message'],
+			'user_id'					=> client_session_val(),
+			'date_added' 				=> current_ph_date_time(),
+			);
+			$result = $this->db->insert('pending_item', $data);
+			if($result){
+				return 1;
+			}else{
+				return 0;
+			}
+		
+	}
+
 	public function apply_form($post){
+		if($post['message'] != ''){
+			$arrayName = array(
+			'is_verified'					=> '1',
+					
+		);
+		$this->db->where('pending_item_id', $post['pending_item_id']);
+		$result = $this->db->update('pending_item', $arrayName);
+
 			$arrayName = array(
 				'product_id' 		=> $post['product_id'],
 				'downpayment' 		=> $post['downpayment'],
@@ -85,6 +133,9 @@ class Main_model extends CI_Model
 			}else{
 				return 0;
 			}
+		}else{
+
+		}
 		
 	}
 

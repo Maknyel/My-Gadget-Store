@@ -174,11 +174,29 @@ if(!function_exists('get_all_product')){
 if(!function_exists('get_all_product_ordered')){
 	function get_all_product_ordered($is_ok) {
 		$CI =& get_instance();
-		$CI->db->select("apply_for_item.*,product.*");
+		$CI->db->select("apply_for_item.*,pending_item.*");
 		$CI->db->from("apply_for_item");
-		$CI->db->join('product', 'apply_for_item.product_id = product.prod_id', 'inner');
+		$CI->db->join('pending_item', 'apply_for_item.product_id = pending_item.pending_item_id', 'inner');
 		$CI->db->where('apply_for_item.is_ok',$is_ok);
 		$CI->db->where('apply_for_item.user_id',client_session_val());
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+if(!function_exists('global_icon')){
+	function global_icon() {
+		return base_url().'assets/user_template/img/footer-bg.png';
+	}
+}
+
+if(!function_exists('get_all_product_ordered_admin')){
+	function get_all_product_ordered_admin($is_verified) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("pending_item");
+		$CI->db->where('user_id',client_session_val());
+		$CI->db->where('is_verified',$is_verified);
 		$query = $CI->db->get()->result_array();
 		return $query;
 	}
@@ -245,12 +263,9 @@ if(!function_exists('count_dashboard_all')){
 			break;
 
 			case 'pending_product':
-				$CI->db->select("apply_for_item.*,product.*,user.*,user_addtional_info.*");
-				$CI->db->from("apply_for_item");
-				$CI->db->join('product', 'apply_for_item.product_id = product.prod_id', 'inner');
-				$CI->db->join('user', 'apply_for_item.user_id = user.user_id', 'inner');
-				$CI->db->join('user_addtional_info', 'apply_for_item.user_id = user_addtional_info.user_id', 'left');
-				$CI->db->where('apply_for_item.is_approved','0');
+				$CI->db->select("*");
+				$CI->db->from("pending_item");
+				$CI->db->where('is_verified','0');
 				$result = $CI->db->get();
 				return $result->num_rows();
 			break;
@@ -290,11 +305,24 @@ function _list_registered_users($year,$month)
 if(!function_exists('get_all_application')){
 	function get_all_application() {
 		$CI =& get_instance();
-		$CI->db->select("apply_for_item.*,product.*,user.*,user_addtional_info.*");
+		$CI->db->select("apply_for_item.*,pending_item.*,user.*,user_addtional_info.*");
 		$CI->db->from("apply_for_item");
-		$CI->db->join('product', 'apply_for_item.product_id = product.prod_id', 'inner');
+		$CI->db->join('pending_item', 'apply_for_item.product_id = pending_item.pending_item_id', 'inner');
 		$CI->db->join('user', 'apply_for_item.user_id = user.user_id', 'inner');
 		$CI->db->join('user_addtional_info', 'apply_for_item.user_id = user_addtional_info.user_id', 'left');
+		
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+if(!function_exists('get_all_application_v2')){
+	function get_all_application_v2() {
+		$CI =& get_instance();
+		$CI->db->select("pending_item.*,user.*");
+		$CI->db->from("pending_item");
+		$CI->db->join('user', 'pending_item.user_id = user.user_id', 'inner');
+		$CI->db->join('user_addtional_info', 'pending_item.user_id = user_addtional_info.user_id', 'inner');
 		
 		$query = $CI->db->get()->result_array();
 		return $query;
@@ -304,9 +332,9 @@ if(!function_exists('get_all_application')){
 if(!function_exists('manage_id_bill')){
 	function manage_id_bill($id) {
 		$CI =& get_instance();
-		$CI->db->select("apply_for_item.*,product.*");
+		$CI->db->select("apply_for_item.*,pending_item.*");
 		$CI->db->from("apply_for_item");
-		$CI->db->join('product', 'apply_for_item.product_id = product.prod_id', 'inner');
+		$CI->db->join('pending_item', 'apply_for_item.product_id = pending_item.pending_item_id', 'inner');
 		$CI->db->where('apply_for_item.apply_for_item_id',$id);
 		$query = $CI->db->get()->result_array();
 		return current($query);
@@ -318,9 +346,9 @@ if(!function_exists('manage_id_bill')){
 if(!function_exists('manage_id_bill_admin')){
 	function manage_id_bill_admin($id) {
 		$CI =& get_instance();
-		$CI->db->select("apply_for_item.*,product.*");
+		$CI->db->select("apply_for_item.*,pending_item.*");
 		$CI->db->from("apply_for_item");
-		$CI->db->join('product', 'apply_for_item.product_id = product.prod_id', 'inner');
+		$CI->db->join('pending_item', 'apply_for_item.product_id = pending_item.pending_item_id', 'inner');
 		$CI->db->where('apply_for_item.apply_for_item_id',$id);
 		$query = $CI->db->get()->result_array();
 		return current($query);

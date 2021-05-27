@@ -15,6 +15,25 @@ class Admin_class extends CI_Model
 		}
 	}
 	
+	public function update_pending_image($post){
+		$arrayName = array(
+			'item_name' 					=> $post['item_name'],
+			'item_description' 				=> $post['item_description'],
+			'item_price' 					=> $post['item_price'],
+			'min_downpayment' 				=> ($post['item_price'] * .20),
+			'image_name'					=> $post['image_name'],
+			'is_verified'					=> '2',
+					
+		);
+		$this->db->where('pending_item_id', $post['pending_item_id']);
+		$result = $this->db->update('pending_item', $arrayName);
+
+		if($result){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
 
 }
 

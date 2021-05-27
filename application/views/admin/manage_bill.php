@@ -53,7 +53,7 @@
                       <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 col-12">
                         <div class="box2 box-primary">
                           <div class="box-header with-border">
-                            <h1>Transactions - <?=$manage['prod_name']?></h1>
+                            <h1>Transactions - <?=$manage['item_name']?></h1>
                             
                           </div><!-- /.box-header -->
                           <div class="box-body">
@@ -95,7 +95,7 @@
                         <div class="box2 box-primary">
                           <div class="box-header with-border">
                             <h3>Transactions info</h3>
-                            <p><b>Product Name: </b><?=$manage['prod_name']?></p>
+                            <p><b>Product Name: </b><?=$manage['item_name']?></p>
                             <p><b>Downpayment: </b>₱<?=$manage['downpayment']?></p>
                             <p><b>Product Total Price: ₱</b><?=$manage['total_payment']?></p>
                             <p><b>Bill Per month: </b>₱<?=$manage['per_month_bill']?></p>

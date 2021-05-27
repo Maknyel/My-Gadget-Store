@@ -140,6 +140,19 @@ class Admin extends CI_Controller {
 		$this->load->view("admin/global/footer",$data);
 	}
 
+    public function pending_application(){
+        admin_session_redirection();
+        $data = array(
+            'title'             => global_page_function(),
+            'page'              => 'Pending Application',
+            'is_datatables'     => FALSE, 
+        );
+        
+        $this->load->view("admin/global/header",$data);
+        $this->load->view("admin/pending_application",$data);
+        $this->load->view("admin/global/footer",$data);
+    }
+
 	public function branch(){
 		admin_session_redirection();
 		$data = array(
@@ -219,6 +232,11 @@ class Admin extends CI_Controller {
 		$this->load->view("admin/history",$data);
 		$this->load->view("admin/global/footer",$data);
 	}
+
+    public function update_pending_image(){
+        $post = $this->input->post();
+        echo json_encode($this->Admin_class->update_pending_image($post));
+    }
 
 	public function product_function(){
 		$post = $this->input->post();

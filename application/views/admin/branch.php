@@ -25,11 +25,11 @@
 					<div class = "col-md-4 col-lg-4 col-xl-4 col-xs-12 col-sm-12 col-12">
 						<div class="x_panel">
 			                <div class="x_title">
-			                    <h2>Add Product <i class = "fa fa-building"></i></h2>
+			                    <h2>Add Brand <i class = "fa fa-building"></i></h2>
 			                 	<div class="clearfix"></div>
 			                </div>
 			                <div class="x_content">
-			                    <form class="form-horizontal form-label-left" id="add_product">
+			                    <form class="form-horizontal form-label-left" id="add_brand">
 			                    	<div class="form-group">
 				                        <label class="col-md-12 col-sm-12 col-xs-12">Upload Image</label>
 					                    <div class="col-md-12 col-sm-12 col-xs-12">    
@@ -40,36 +40,36 @@
 					                    </div>
 				                    </div>
 				                    <div class="form-group">
-				                        <label class="col-md-12 col-sm-12 col-xs-12">Product Code</label>
+				                        <label class="col-md-12 col-sm-12 col-xs-12">Brand Code</label>
 				                        <div class="col-md-12 col-sm-12 col-xs-12">
 				                          	<input type="text" class="form-control" name = "serial" required="">
 				                          	<span class="fa fa-buildi form-control-feedback right" aria-hidden="true" ></span>
 				                        </div>
 				                    </div>
 				                    <div class="form-group">
-				                        <label class="col-md-12 col-sm-12 col-xs-12">Product Name</label>
+				                        <label class="col-md-12 col-sm-12 col-xs-12">Brand Name</label>
 				                        <div class="col-md-12 col-sm-12 col-xs-12">
 				                          	<input type="text" style = "resize:none;" name = "prod_name" id="prod_name" class="form-control" required="">
 				                          	<span class="fa fa-person form-control-feedback right" aria-hidden="true" ></span>
 				                        </div>
 				                    </div>
 				                    <div class="form-group">
-				                        <label class="col-md-12 col-sm-12 col-xs-12">Product Descrption</label>
+				                        <label class="col-md-12 col-sm-12 col-xs-12">Brand Descrption</label>
 				                        <div class="col-md-12 col-sm-12 col-xs-12">
 				                          	<textarea type="text" class="form-control" name = "prod_desc" id="prod_desc" required></textarea>
 				                          	<span class="fa fa-phe form-control-feedback right" aria-hidden="true"></span>
 				                        </div>
 				                    </div>
 				                    <script type="text/javascript">
-				                    	new FroalaEditor('#add_product textarea#prod_desc', {
+				                    	new FroalaEditor('#add_brand textarea#prod_desc', {
 							                imageUploadURL: base_url+'Admin/upload_image',
 							              })
 				                    </script>
 				                      
-				                    <div class="form-group">
-				                        <label class="col-md-12 col-sm-12 col-xs-12">Product Price</label>
+				                    <div class="form-group" style="display: none;">
+				                        <label class="col-md-12 col-sm-12 col-xs-12">Brand Price</label>
 				                        <div class="col-md-12 col-sm-12 col-xs-12">
-				                          	<input type="number" step="0.01" class="form-control" name = "prod_price" required>
+				                          	<input type="hidden" class="form-control" name = "prod_price" required>
 				                          	<input type="hidden" value="add" name="method">
 				                          	<input type="hidden" value="<?=get_admin_data('branch_id')?>" name="branch_id">
 				                          	<input type="hidden" name="image" id="image">
@@ -138,8 +138,8 @@
 
 
 								                } else {
-								                  $('#add_product #img_only').attr('src',data['path']);
-									                  $('#add_product #image').val(data['file_data']);
+								                  $('#add_brand #img_only').attr('src',data['path']);
+									                  $('#add_brand #image').val(data['file_data']);
 								                }
 
 								              },
@@ -147,11 +147,11 @@
 								            });
 
 								    }
-			                    	$(document).on('submit', '#add_product', function(event){
+			                    	$(document).on('submit', '#add_brand', function(event){
 							          event.preventDefault();
 							          
 							          
-							          dataString = $('#add_product').serialize();
+							          dataString = $('#add_brand').serialize();
 							          var data = dataString;
 							          if($('#image').val() == ''){
 							          	alert_data('Error',"Please Upload Image");
@@ -164,7 +164,7 @@
 								            success:function(data)
 								            {
 								              if(data == 1){
-								                  alert_data('Success',"Product Success Added");
+								                  alert_data('Success',"Brand Success Added");
 								              }else{
 							                	alert_data('Error',"Invalid Request");
 								              }
@@ -195,11 +195,11 @@
 						 <table id="datatable" class="table table-striped table-bordered">
 							 <thead>
 								<tr>
-									<th>Product Code</th>
-									<th>Product Name</th>
+									<th>Brand Code</th>
+									<th>Brand Name</th>
 									<th>Description</th>
 									<th>Image</th>
-									<th>Price</th>
+									<!-- <th>Price</th> -->
 									<th>Action</th>									
 								</tr>
 							 </thead>
@@ -217,7 +217,7 @@
 										<img height="auto" width="100%" src="<?=base_url()?>Product/<?=$row1['image']?>">
 											
 									</td>
-									<td><?php echo $row1['prod_price'];?></td>
+									<!-- <td><?php echo $row1['prod_price'];?></td> -->
 									<td>
 										<a href="#update<?php echo $id;?>" class="btn btn-success btn-xs" data-toggle = "modal" data-target="#update<?php echo $id;?>"><i class = "fa fa-pencil"></i> Edit</a>
 										
@@ -230,22 +230,22 @@
 
 						                        	<div class="modal-header">
 						                          		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-						                          <h4 class="modal-title" id="myModalLabel2">Edit Product Details</h4>
+						                          <h4 class="modal-title" id="myModalLabel2">Edit Brand Details</h4>
 						                        </div>
 						                        <div class="modal-body">
 						                         <form id="edit_product<?=$id?>"> 
 												   		<input type="hidden" name="prod_id" value="<?php echo $id;?>">
-														<label>Product Code</label>
+														<label>Brand Code</label>
 															<input type="text" name = "serial" class="form-control" value = "<?php echo $row1['serial'];?>">
 															<br/>								
-														<label>Product Name</label>
+														<label>Brand Name</label>
 															<input type="text" name = "prod_name" class="form-control" value = "<?php echo $row1['prod_name'];?>">
 															<br/>
-														<!-- <label>Product Description</label>
+														<!-- <label>Brand Description</label>
 															<input type="text" name = "prod_desc" class="form-control" value = "<?php echo $row1['prod_desc'];?>">
 															<br/> -->
-														<label>Product Price</label>
-															<input type="text" name = "prod_price" class="form-control" value = "<?php echo $row1['prod_price'];?>">
+														<label style="display: none;">Brand Price</label>
+															<input type="hidden" name = "prod_price" class="form-control" value = "<?php echo $row1['prod_price'];?>">
 															<input type="hidden" value="edit" name="method">
 				                          					<input type="hidden" value="<?=get_admin_data('branch_id')?>" name="branch_id">
 															<br/>
@@ -276,7 +276,7 @@
 									            success:function(data)
 									            {
 									              if(data == 1){
-									                  alert_data('Success',"Product Success Updated");
+									                  alert_data('Success',"Brand Success Updated");
 									              }else{
 								                	alert_data('Error',"Invalid Request");
 									              }

@@ -21,7 +21,7 @@
                       <?php foreach (get_all_application() as $key => $row) { ?>
                       <tr>
                         <td><?php echo $row['name'];?></td>
-                        <td><?php echo $row['prod_name'];?></td>
+                        <td><?php echo $row['item_name'];?></td>
                         <td><?php echo $row['total_payment'];?></td>
                         <td><?php echo $row['downpayment'];?></td>
                         <td><?php echo $row['total_months'];?></td>          

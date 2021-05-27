@@ -89,7 +89,7 @@
 	        <div class="icon">
 	            <!-- <i class="fa fa-users"></i> -->
 	        </div>
-	        <a href="<?=base_url()?>admin/application" class="small-box-footer">
+	        <a href="<?=base_url()?>admin/pending_application" class="small-box-footer">
 	            More info <i class="fa fa-arrow-circle-right"></i>
 	        </a>
 	    </div>
@@ -113,7 +113,7 @@
 	</div>
 
   </div>
-  <div class="container-fluid">
+  <div class="container-fluid" style="display: none;">
   	<div class="box2 box-primary">
   		<div class="box-header with-border">
 	        <h1>Product Sold</h1>
@@ -127,25 +127,25 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function(){	
-		$.ajax({
-			type : 'POST',
-			url: base_url+'Admin/getBarChartDataLastYear',
-			data : {},
-			dataType : 'json',
-			success : function(res){
-				// alert(JSON.stringify(res));
-					Morris.Bar({
-				      element: 'myChartLastYear',
-				      data: res,
-				      xkey: 'y',
-				      ykeys: ['a', 'b'],
-					  labels: ['2020', '2021'],
+	// $(document).ready(function(){	
+	// 	$.ajax({
+	// 		type : 'POST',
+	// 		url: base_url+'Admin/getBarChartDataLastYear',
+	// 		data : {},
+	// 		dataType : 'json',
+	// 		success : function(res){
+	// 			// alert(JSON.stringify(res));
+	// 				Morris.Bar({
+	// 			      element: 'myChartLastYear',
+	// 			      data: res,
+	// 			      xkey: 'y',
+	// 			      ykeys: ['a', 'b'],
+	// 				  labels: ['2020', '2021'],
 
-				    });
-			}
-		});
-	});
+	// 			    });
+	// 		}
+	// 	});
+	// });
 </script>
 <style type="text/css">
 	.box2.box-primary {
