@@ -64,15 +64,15 @@
 	<div class="col-xl-2 col-lg-2 col-md-4 col-6 col-xs-6 col-sm-6 col-xs-6">
 	    <div class="small-box bg-green">
 	        <div class="inner">
-	            <h3 id="employer_total_count"><?=count_dashboard_all('product')?></h3>
+	            <h3 id="employer_total_count"><?=count_dashboard_all('applicant')?></h3>
 	            <p>
-	                Product
+	                To Pending to approve
 	            </p>
 	        </div>
 	        <div class="icon">
 	            <!-- <i class="fa fa-users"></i> -->
 	        </div>
-	        <a href="<?=base_url()?>admin/branch" class="small-box-footer">
+	        <a href="<?=base_url()?>admin/application" class="small-box-footer">
 	            More info <i class="fa fa-arrow-circle-right"></i>
 	        </a>
 	    </div>

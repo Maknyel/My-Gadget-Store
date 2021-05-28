@@ -131,7 +131,7 @@
 
             <div class="form-group">
               <label>Item Price:</label>
-              <input type="text" class="form-control" name="item_price" id="item_price">              
+              <input type="number" step="0.1" class="form-control" name="item_price" id="item_price">              
             </div>
 
             <div class="form-group">

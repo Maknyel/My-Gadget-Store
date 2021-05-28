@@ -287,6 +287,17 @@ if(!function_exists('count_dashboard_all')){
 				return $result->num_rows();
 			break;
 
+			case 'applicant':
+				$CI->db->select("apply_for_item.*,pending_item.*,user.*,user_addtional_info.*");
+				$CI->db->from("apply_for_item");
+				$CI->db->join('pending_item', 'apply_for_item.product_id = pending_item.pending_item_id', 'inner');
+				$CI->db->join('user', 'apply_for_item.user_id = user.user_id', 'inner');
+				$CI->db->join('user_addtional_info', 'apply_for_item.user_id = user_addtional_info.user_id', 'left');
+				$CI->db->where('apply_for_item.is_approved','0');
+				$query = $CI->db->get();
+				return $query->num_rows();
+			break;
+
 			case 'verified':
 				$CI->db->select("*");
 				$CI->db->from("user");
@@ -790,8 +801,13 @@ if(!function_exists('confirm_bill')){
 				$CI->db->where('apply_for_item_computation', $post['apply_for_item_computation']);
 				$query100 = $CI->db->get()->result_array();
 				$beforedata = current($query100);
-
-			if($beforedata['amount_payed'] == $beforedata['computation']){
+			
+			if($beforedata['datetime_expected_to_pay'] > $beforedata['datetime_pay']){
+				$computation = $beforedata['computation'];
+			}else{
+				$computation = $beforedata['computation'] + 100;
+			}
+			if($beforedata['amount_payed'] == $computation){
 				
 			}else{
 					
@@ -814,7 +830,7 @@ if(!function_exists('confirm_bill')){
 
 								}else{
 									$total_apply = apply_count_id($beforedata['apply_for_item_id']);
-									$subtract = $beforedata['amount_payed'] - $beforedata['computation'];
+									$subtract = $beforedata['amount_payed'] - $computation;
 									$subcompute = $subtract/$total_apply;
 									$arrayName2 = array(
 										'computation' 					=> $value['computation']-$subcompute,

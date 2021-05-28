@@ -1,5 +1,5 @@
 <div class="modal-new-design">
-    <div class="modal-dialog" style="height: 100vh;overflow: auto;">
+    <div class="modal-dialog" style="padding-top:10vh;height: 80vh;overflow: auto;">
     
       <!-- Modal content-->
       <div class="modal-content">
@@ -61,6 +61,7 @@
                           <tr>
                             <th>Date Must Pay</th>
                             <th>Amount</th>
+                            <th>Penalty (if late)</th>
                             <th>Proof</th>
                             <th>Amount Payed</th>
                             <th>Date Payed</th>
@@ -74,6 +75,24 @@
                             <tr>
                               <td><?=$value['datetime_expected_to_pay']?></td>
                               <td>₱<?=$value['computation']?></td>
+                              <td>
+                                <?php
+                                  if($value['is_payed'] == 0){
+                                    if($value['datetime_expected_to_pay'] < current_ph_date_time()){
+                                      echo '100';
+                                    }else{
+                                      echo '0';
+                                    }
+                                  }else{
+                                    if($value['datetime_expected_to_pay'] < $value['datetime_pay']){
+                                      echo '100';
+                                    }else{
+                                      echo '0';
+                                    }
+                                  }
+                                  ?>
+                                  
+                                </td>
                               <td><?php if($value['proof_image'] != ''){ ?><img onclick="window.open(`<?=base_url()?>Bill/<?=$value['apply_for_item_computation']?>/<?=$value['proof_image']?>`, 'hello', 'width=100%,height=auto');" src="<?=base_url()?>Bill/<?=$value['apply_for_item_computation']?>/<?=$value['proof_image']?>" width="50px" height="auto"><?php } ?></td>
                               <td><?=($value['amount_payed'] != '')?'₱'.$value['amount_payed']:''?></td>
                               <td><?=$value['datetime_pay']?></td>
@@ -83,10 +102,10 @@
                                   <?php if($i == 1){ ?>
                                     <?php if($key > 0){ ?>
                                       <?php if($get_data[$key-1]['is_payed'] != 2){ ?> 
-                                        <a href="#" class="btn btn-success" onclick="upload_file(`<?=$value['apply_for_item_computation']?>`,`<?=$value['computation']?>`);modal_function_show();">Pay</a>
+                                        <a href="#" class="btn btn-success" onclick="upload_file(`<?=($value['datetime_expected_to_pay'] < current_ph_date_time())?'1':'0'?>`,`<?=$value['apply_for_item_computation']?>`,`<?=$value['computation']?>`);modal_function_show();">Pay</a>
                                       <?php } ?>
                                     <?php }else{ ?>
-                                      <a href="#" class="btn btn-success" onclick="upload_file(`<?=$value['apply_for_item_computation']?>`,`<?=$value['computation']?>`);modal_function_show();">Pay</a>
+                                      <a href="#" class="btn btn-success" onclick="upload_file(`<?=($value['datetime_expected_to_pay'] < current_ph_date_time())?'1':'0'?>`,`<?=$value['apply_for_item_computation']?>`,`<?=$value['computation']?>`);modal_function_show();">Pay</a>
                                     <?php } ?>
                                   <?php } ?>
                                 <?php } ?>
@@ -189,9 +208,18 @@
             });
 
     }
-    function upload_file(apply_for_item_computation,computation){
-      // $('#apply_form #downpayment').attr('min',computation);
-      $('#apply_form #computation').val(computation);
+    function upload_file(is_late,apply_for_item_computation,computation){
+      
+      if(is_late == 1){
+        // $('#apply_form #downpayment').attr('min',computation + 100);
+        $('#apply_form #computation').val(parseFloat(computation) + 100);
+        $('#apply_form #downpayment').val(parseFloat(computation) + 100);  
+      }else{
+        // $('#apply_form #downpayment').attr('min',computation);
+        $('#apply_form #computation').val(computation);
+        $('#apply_form #downpayment').val(computation);
+      }
+      
       $('#apply_form #apply_for_item_computation').val(apply_for_item_computation);
     }
 
