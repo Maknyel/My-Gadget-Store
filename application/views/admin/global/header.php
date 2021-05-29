@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Sales and Inventory System </title>
+    <title><?=$title?> </title>
     <link href="<?=global_icon()?>" rel="icon">
     <link href="<?=global_icon()?>" rel="apple-touch-icon">
     <link href="<?=base_url()?>assets/admin/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">

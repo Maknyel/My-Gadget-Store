@@ -11,7 +11,7 @@
               <span><?=$title?></span>
             </a>
             <h1>Terms and agreement</h1>
-            <p>Dear our beloved creditors, pleae be informed that this store needs your valid IDs and credentials for loaning. We will charged 13% interest per transaction minus from your downpayment. 100pesos will be charged automatically if you over lap in your date of payment. Once the item are not pay for 2 months, we will send you a memo letter, much worst you will go to jail. You cant loan two items a time. Only accepts cash and gcash payment. You need to send proof of payment like picture or screen shots and send it through the system. Once your balance is back to zero you can loan again. Thankyou</p>
+            <p>Dear our beloved creditors, please be informed that this store needs your valid IDs and credentials for loaning. a 100 peso will be charged automatically for your late payment. if unable to pay for two consecutive months we will increase interest rate and endorse your third party collections agency. you cant apply loan for two at a time. Doable cash and Gcash payment. sending proof of payment such as picture or screenshots are acceptable. Once you already settle you first loan, you can now enjoy free apply for another loan. Thankyou</p>
             <!-- <div class="social-links mt-3">
               <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -23,7 +23,7 @@
             <h1 data-aos="fade-up">About Us</h1>
           
             <p>Mr. Niel Lopez us the owner of the store. Store was established 3 years ago at Arellano Street Lessandra Heights Molino IV, Bacoor Cavite</p>
-            <p>Store gives interest based on terms choosed, 3mos (3%), 6mos (6%), 9mos (9%), 12mos (12%)</p>
+            <p>Store gives interest based on terms chosen, 3mos (3%), 6mos (6%), 9mos (9%), 12mos (12%)</p>
             <p>100 pesos penalty for late payment</p>
           </div>
 

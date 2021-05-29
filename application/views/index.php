@@ -19,9 +19,9 @@
           <ul>
             <li><h2 data-aos="fade-up" data-aos-delay="400">You must need valid IDs and another credential for loaning like payslip, electric bill and etc.</h2></li>
             <li><h2 data-aos="fade-up" data-aos-delay="400">Once your account is approved, you can apply for your item loaning and wait for the admin approval</h2></li>
-            <li><h2 data-aos="fade-up" data-aos-delay="400">Once your item loaning is approved, you can proceed to downpayment, send your proof of payment and wait for admin approval</h2></li>
-            <li><h2 data-aos="fade-up" data-aos-delay="400">Once your down payment is approved, admin will give you the item or will deliver at you current address</h2></li>
-            <li><h2 data-aos="fade-up" data-aos-delay="400">Split the remaining balance into monthly installments</h2></li>
+            <li><h2 data-aos="fade-up" data-aos-delay="400">Once your loan item is approved, you can proceed to down payment, send your proof of payment and wait for admin approval</h2></li>
+            <li><h2 data-aos="fade-up" data-aos-delay="400">Once your down payment is approved, the admin will give you the item or will deliver it to your current address</h2></li>
+            <!-- <li><h2 data-aos="fade-up" data-aos-delay="400">Split the remaining balance into monthly installments</h2></li> -->
           </ul>
           
           

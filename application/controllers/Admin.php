@@ -259,7 +259,7 @@ class Admin extends CI_Controller {
 	public function login(){
 		re_admin_session_redirection();
 		$data = array(
-			'title' 			=> global_page_function().' | '.'Sales and Inventory System',
+			'title' 			=> global_page_function(),
 			'page' 				=> 'Login',
 			'is_datatables'		=> FALSE, 
 		);

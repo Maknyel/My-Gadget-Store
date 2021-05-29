@@ -220,7 +220,7 @@ if(!function_exists('global_icon')){
 if(!function_exists('practice')){
 	function practice() {
 		$arrayName = array(
-			'SSS','UMID','PRC','Driver&apos;s license','Driver&apos;s license','Passport','TIN ID'
+			'SSS','UMID','PRC','Driver&apos;s license','Passport','TIN ID'
 		);
 
 		return $arrayName;

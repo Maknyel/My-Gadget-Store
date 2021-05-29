@@ -1,6 +1,6 @@
 <footer>
                     <div class="pull-right">
-                      Sales and Inventory System <a href="#"></a>
+                      <?=global_page_function()?> <a href="#"></a>
                     </div>
                     <div class="clearfix"></div>
                   </footer>
