@@ -219,6 +219,8 @@
                   alert_data('Success',"You have successfully signed-up. Please wait while redirecting you to login page.",'<?=base_url()?>login');
               }else if(data == 2){
                 alert_data('Error',"Username Exists",'');
+              }else if(data == 3){
+                alert_data('Error',"Please Upload atleast 2 valid Id",'');
               }else{
                 alert_data('Error',"Error was encountered. please refresh the page",'');
               }

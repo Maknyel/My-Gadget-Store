@@ -123,7 +123,9 @@
                 <div class="" style="width: 100%;text-align: right;">
                   <?php if(get_user_pending_item() == 0){ ?>
                     <?php if(apply_count_id_user_id(client_session_val()) == 0){ ?>
-                      <a href="#" class="btn btn-info" onclick="modal_function_show();">Add</a>
+                      <?php if(get_user_additional_info_field(client_session_val(),'is_verified') == 1){ ?>
+                        <a href="#" class="btn btn-info" onclick="modal_function_show();">Add</a>
+                      <?php } ?>
                     <?php } ?>
                   <?php } ?>
                 </div>
@@ -156,6 +158,7 @@
                     <li class="<?=isset($_GET['type'])?'':'active'?>"><a data-toggle="tab" href="<?=base_url()?>manage">Pending</a></li>
                     <li class="<?=isset($_GET['type'])?(($_GET['type'] == 'for_payment')?'active':''):''?>"><a data-toggle="tab" href="<?=base_url()?>manage?type=for_payment">For Payment</a></li>
                     <li class="<?=isset($_GET['type'])?(($_GET['type'] == 'pending_item')?'active':''):''?>"><a data-toggle="tab" href="<?=base_url()?>manage?type=pending_item">Pending Item</a></li>
+                    <li class="<?=isset($_GET['type'])?(($_GET['type'] == 'generate_esign')?'active':''):''?>"><a data-toggle="tab" href="<?=base_url()?>manage?type=generate_esign">Generate Esign</a></li>
                   </ul>
                 </div><!-- /.box-header -->
                 <div class="box-body">
@@ -256,6 +259,177 @@
                               <?php } ?>
                           </div>
                         <?php } ?>
+                      <?php }else if($_GET['type'] == 'generate_esign'){ ?>
+                        <div class="row">
+                          <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-xl-6 col-mg-6">
+                          <canvas id="sig-canvas" width="620" height="160" style="max-width: 100%;">
+                          Get a better browser, bro.
+                          </canvas>
+
+                          <br><br>
+                          <button class="btn btn-primary" id="sig-submitBtn">Submit Signature</button>
+                            <button class="btn btn-default" id="sig-clearBtn">Clear Signature</button>
+                          </div>
+                          <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-xl-6 col-mg-6">
+                            <div id="displaynonearea" style="display:none">
+                              <img id="sig-image" style="    border: 2px dotted #CCCCCC;width:100%;height:auto;" src="" alt="Your signature will go here!"/>
+                              <br><br>
+                              <a href="" id="esignme" class="btn btn-primary" download="mypng.png">Download</a>
+                              
+                            </div>
+                          </div>
+                        </div>
+                     
+                        
+
+                          <style type="text/css">
+                            #sig-canvas {
+                            border: 2px dotted #CCCCCC;
+                            border-radius: 15px;
+                            cursor: crosshair;
+                            /* width: 100%; */
+                          }
+                          </style>
+
+                          <script>
+                            (function() {
+                            window.requestAnimFrame = (function(callback) {
+                              return window.requestAnimationFrame ||
+                                window.webkitRequestAnimationFrame ||
+                                window.mozRequestAnimationFrame ||
+                                window.oRequestAnimationFrame ||
+                                window.msRequestAnimaitonFrame ||
+                                function(callback) {
+                                  window.setTimeout(callback, 1000 / 60);
+                                };
+                            })();
+
+                            var canvas = document.getElementById("sig-canvas");
+                            var ctx = canvas.getContext("2d");
+                            ctx.strokeStyle = "#222222";
+                            ctx.lineWidth = 4;
+
+                            var drawing = false;
+                            var mousePos = {
+                              x: 0,
+                              y: 0
+                            };
+                            var lastPos = mousePos;
+
+                            canvas.addEventListener("mousedown", function(e) {
+                              drawing = true;
+                              lastPos = getMousePos(canvas, e);
+                            }, false);
+
+                            canvas.addEventListener("mouseup", function(e) {
+                              drawing = false;
+                            }, false);
+
+                            canvas.addEventListener("mousemove", function(e) {
+                              mousePos = getMousePos(canvas, e);
+                            }, false);
+
+                            // Add touch event support for mobile
+                            canvas.addEventListener("touchstart", function(e) {
+
+                            }, false);
+
+                            canvas.addEventListener("touchmove", function(e) {
+                              var touch = e.touches[0];
+                              var me = new MouseEvent("mousemove", {
+                                clientX: touch.clientX,
+                                clientY: touch.clientY
+                              });
+                              canvas.dispatchEvent(me);
+                            }, false);
+
+                            canvas.addEventListener("touchstart", function(e) {
+                              mousePos = getTouchPos(canvas, e);
+                              var touch = e.touches[0];
+                              var me = new MouseEvent("mousedown", {
+                                clientX: touch.clientX,
+                                clientY: touch.clientY
+                              });
+                              canvas.dispatchEvent(me);
+                            }, false);
+
+                            canvas.addEventListener("touchend", function(e) {
+                              var me = new MouseEvent("mouseup", {});
+                              canvas.dispatchEvent(me);
+                            }, false);
+
+                            function getMousePos(canvasDom, mouseEvent) {
+                              var rect = canvasDom.getBoundingClientRect();
+                              return {
+                                x: mouseEvent.clientX - rect.left,
+                                y: mouseEvent.clientY - rect.top
+                              }
+                            }
+
+                            function getTouchPos(canvasDom, touchEvent) {
+                              var rect = canvasDom.getBoundingClientRect();
+                              return {
+                                x: touchEvent.touches[0].clientX - rect.left,
+                                y: touchEvent.touches[0].clientY - rect.top
+                              }
+                            }
+
+                            function renderCanvas() {
+                              if (drawing) {
+                                ctx.moveTo(lastPos.x, lastPos.y);
+                                ctx.lineTo(mousePos.x, mousePos.y);
+                                ctx.stroke();
+                                lastPos = mousePos;
+                              }
+                            }
+
+                            // Prevent scrolling when touching the canvas
+                            document.body.addEventListener("touchstart", function(e) {
+                              if (e.target == canvas) {
+                                e.preventDefault();
+                              }
+                            }, false);
+                            document.body.addEventListener("touchend", function(e) {
+                              if (e.target == canvas) {
+                                e.preventDefault();
+                              }
+                            }, false);
+                            document.body.addEventListener("touchmove", function(e) {
+                              if (e.target == canvas) {
+                                e.preventDefault();
+                              }
+                            }, false);
+
+                            (function drawLoop() {
+                              requestAnimFrame(drawLoop);
+                              renderCanvas();
+                            })();
+
+                            function clearCanvas() {
+                              canvas.width = canvas.width;
+                            }
+
+                            // Set up the UI
+                            var sigImage = document.getElementById("sig-image");
+                            var esignme = document.getElementById("esignme");
+
+                            var clearBtn = document.getElementById("sig-clearBtn");
+                            var submitBtn = document.getElementById("sig-submitBtn");
+                            clearBtn.addEventListener("click", function(e) {
+                              clearCanvas();
+                              sigImage.setAttribute("src", "");
+                              esignme.setAttribute("src", "");
+                              $('#displaynonearea').hide();
+                            }, false);
+                            submitBtn.addEventListener("click", function(e) {
+                              var dataUrl = canvas.toDataURL();
+                              sigImage.setAttribute("src", dataUrl);
+                              esignme.setAttribute("href", dataUrl);
+                              $('#displaynonearea').show();
+                            }, false);
+
+                          })();
+                          </script>
                       <?php } ?>
                   <?php } ?>
                       
@@ -278,8 +452,11 @@
         allowOutsideClick: false,
         title: 'Apply',
         html: `
-        <form style="display:none" id="uploadForm" method="POST" enctype="multipart/form-data">
+                    <form style="display:none" id="uploadForm" method="POST" enctype="multipart/form-data">
                         <input type="file" name ="file" id="file" accept="image/*">
+                    </form>
+                    <form style="display:none" id="uploadForm2" method="POST" enctype="multipart/form-data">
+                        <input type="file" name ="file" id="file2" accept="application/msword">
                     </form>
               <form id="apply_form2">
                 <div class="modal-body">
@@ -291,20 +468,29 @@
                         <button type="button" class="btn btn-primary" onclick="upload_file()">Upload Image</button>
                       </div>
                   </div>
+
+                  <div class="form-group">
+                    <label class="">Upload File</label>
+                      <div class="hideme" style="display:none;">
+                        <a href="" id="img_only2" height="auto" width="100%">View</a>
+                      </div>
+                      <div style="text-align: center;width:100%;">
+                        <button type="button" class="btn btn-primary" onclick="upload_file2()">Upload File</button>
+                      </div>
+                  </div>
+
                   <div class="form-group">
                     <label>Total Payment:</label>
                     <input type="text" value="" class="form-control" name="total_payment" id="total_payment" required="" readonly="">
                     <input type="hidden" name="proof_image" id="proof_image">
+                    <input type="hidden" name="contract" id="contract">
+                    
                     <input type="hidden" name="pending_item_id" id="pending_item_id">
                   </div>
                   <div class="form-group">
                     <label>Downpayment:</label>
                     <input type="number" max="" value="0" class="form-control" name="downpayment" id="downpayment" required="">
                     <input type="hidden" value="" class="form-control" name="product_id" id="product_id" required="">
-                  </div>
-                  <div class="form-group">
-                    <label>Message:</label>
-                    <textarea class="form-control" name="message" id="message" required=""></textarea>
                   </div>
                   <div class="form-group">
                     <label>Total Months:</label>
@@ -331,8 +517,10 @@
 
           const downpayment = $('#apply_form2 #downpayment').val()
           const product_id = $('#apply_form2 #product_id').val()
+          const contract = $('#apply_form2 #contract').val()
+          
 
-          const message = $('#apply_form2 #message').val()
+          // const message = $('#apply_form2 #message').val()
           const total_months = $('#apply_form2 #total_months').val()
           const pending_item_id = $('#apply_form2 #pending_item_id').val()
 
@@ -340,8 +528,9 @@
           if (!total_payment) {
             Swal.showValidationMessage(`Please enter total payment`);
           }
-          else if (!proof_image) {
-            Swal.showValidationMessage(`Please enter proof image`);
+
+          else if(downpayment < (total_payment*.20)){
+           Swal.showValidationMessage(`Please pay atleast ₱`+(total_payment*.20)); 
           }
 
           else if (!downpayment) {
@@ -352,6 +541,18 @@
             Swal.showValidationMessage(`Please enter product_id`);
           }
 
+          else if (!proof_image) {
+            Swal.showValidationMessage(`Please upload proof image`);
+          }
+
+          else if (!contract) {
+            Swal.showValidationMessage(`Please upload contract file`);
+          }
+
+          
+
+
+
           // else if (!message) {
           //   Swal.showValidationMessage(`Please enter message`);
           // }
@@ -359,7 +560,7 @@
           else if (!per_month_bill) {
             Swal.showValidationMessage(`Please enter per month bill`);
           }          
-          return { 'total_payment': total_payment, 'proof_image': proof_image, 'downpayment':downpayment, 'product_id':product_id, 'message':message,'per_month_bill':per_month_bill }
+          return { 'contract':contract,'total_payment': total_payment, 'proof_image': proof_image, 'downpayment':downpayment, 'product_id':product_id, 'message':'','per_month_bill':per_month_bill }
         }
       }).then((result) => {
         dataString = $('#apply_form2').serialize();
@@ -420,7 +621,8 @@
       var todivide = $('#apply_form2 #total_payment').val() - $('#apply_form2 #downpayment').val();
       var interest = todivide + (todivide * ($('#apply_form2 #total_months').val()/100));
       var toreturn = interest/$('#apply_form2 #total_months').val();
-      $('#per_month_bill').val(toreturn); 
+
+      $('#per_month_bill').val(toreturn.toFixed(2)); 
       if(parseFloat(prod_total) < parseFloat($('#apply_form2 #downpayment').val())){
         $('#apply_form2 #downpayment').val(0);
         payment_per_month();
@@ -430,9 +632,19 @@
     function upload_file(){
       $('#file').click();
     };
+
+    function upload_file2(){
+      $('#file2').click();
+    };
+
     $(document).on('change','#file', function(){
 
           upload();
+    });
+
+    $(document).on('change','#file2', function(){
+
+          upload2();
     });
 
     function upload(){
@@ -473,6 +685,53 @@
                 } else {
                   $('#apply_form2 #img_only').attr('src',data['path']);
                     $('#apply_form2 #proof_image').val(data['file_data']);
+                }
+
+              },
+              resetForm: true
+            });
+
+    }
+
+    function upload2(){
+        var form = $('#uploadForm2')[0];
+
+        // Create an FormData object
+        var dataString = new FormData(form);
+
+        // alert(dataString);
+            var uploadtracing = $('#uploadForm2');
+            $.ajax({
+              type:'POST',
+              dataType: "json",
+              data: dataString,
+              enctype: 'multipart/form-data',
+              processData: false,
+              contentType: false,
+              cache: false,
+              // timeout: 600000,
+              url: base_url+"Main/upload_bill_testing2/"+$('#apply_form2 #product_id').val(),
+              beforeSubmit: function(data){
+               
+              },
+              uploadProgress: function (event, position, total, progress){
+              },
+              success: function(data){
+                  if(data.status !== 'success'){
+
+                    if (data.msg == "<p>The filetype you are attempting to upload is not allowed.</p>") {
+                        var pop_msg = "<p>"+'Invalid file type upload files in PDF, or mp4 format only'+"</p>";
+                    }else{
+                        var pop_msg = data.msg;
+                    }
+
+                    alert_data('Error',pop_msg);
+
+
+                } else {
+                  $('.hideme').removeAttr('style');
+                  $('#apply_form2 #img_only2').attr('href',data['path']);
+                    $('#apply_form2 #contract').val(data['file_data']);
                 }
 
               },

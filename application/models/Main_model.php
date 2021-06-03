@@ -121,7 +121,6 @@ class Main_model extends CI_Model
 	}
 
 	public function apply_form($post){
-		if($post['message'] != ''){
 			$arrayName = array(
 			'is_verified'					=> '1',
 					
@@ -135,11 +134,12 @@ class Main_model extends CI_Model
 				'total_payment' 	=> $post['total_payment'],
 				'per_month_bill' 	=> $post['per_month_bill'],
 				'total_months'		=> $post['total_months'],
-				'message'			=> $post['message'],
+				// 'message'			=> $post['message'],
 				'is_approved'		=> '0',
 				'date_added'		=> current_ph_date_time(),
 				'user_id'			=> client_session_val(),
-				'proof_image'		=> $post['proof_image']
+				'proof_image'		=> $post['proof_image'],
+				'contract'			=> $post['contract']
 			);
 			$result = $this->db->insert('apply_for_item', $arrayName);
 			$id = $this->db->insert_id();
@@ -159,9 +159,7 @@ class Main_model extends CI_Model
 			}else{
 				return 0;
 			}
-		}else{
-
-		}
+		
 		
 	}
 

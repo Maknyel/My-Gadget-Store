@@ -11,9 +11,10 @@
                         <th>Downpayment</th>
                         <th>Months</th>
                         <th>Bills Per Month</th>
-                        <th>Message</th>
+                        <!-- <th>Message</th> -->
                         <th>Status</th>
                         <th>Proof</th>
+                        <th>File</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -26,13 +27,21 @@
                         <td><?php echo $row['downpayment'];?></td>
                         <td><?php echo $row['total_months'];?></td>          
                         <td><?php echo $row['per_month_bill'];?></td>
-                        <td><?php echo $row['message'];?></td>
+                        <!-- <td><?php echo $row['message'];?></td> -->
                         <td><?php echo ($row['is_approved'] == '1')?'Approved':'Pending';?></td>
                         <td>
                           <?php if($row['proof_image'] != ''){ ?>
-                            <img height="auto" onclick="window.open(`<?=base_url()?>Bill_view/<?=$row['product_id']?>/<?=$row['proof_image']?>`, 'hello', 'width=100%,height=auto');" width="100%" src="<?=base_url()?>Bill_view/<?=$row['product_id']?>/<?=$row['proof_image']?>">
+                            <img height="auto" onclick="window.open(`<?=base_url()?>Bill_view/<?=$row['product_id']?>/<?=$row['proof_image']?>`, 'hello', 'width=100%,height=auto');" width="50px" src="<?=base_url()?>Bill_view/<?=$row['product_id']?>/<?=$row['proof_image']?>">
                           <?php }else{ ?>
                             No Image Uploaded
+                          <?php } ?>
+                        </td>
+                        <td>
+                          <?php if($row['contract'] != ''){ ?>
+                            <!-- <embed height="auto" onclick="window.open(`<?=base_url()?>Bill_view/<?=$row['product_id']?>/<?=$row['contract']?>`, 'hello', 'width=100%,height=auto');" width="50px" src="<?=base_url()?>Bill_view/<?=$row['product_id']?>/<?=$row['contract']?>"></embed> -->
+                            <a href="<?=base_url()?>Bill_view/<?=$row['product_id']?>/<?=$row['contract']?>" target="_blank">View</a>
+                          <?php }else{ ?>
+                            No File Uploaded
                           <?php } ?>
                         </td>
                         <td>

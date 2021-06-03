@@ -275,6 +275,17 @@ if(!function_exists('get_user_additional_info_field_count')){
 	}
 }
 
+if(!function_exists('get_token_id_function')){
+	function get_token_id_function($token_id) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("customer_image");
+		$CI->db->where('token_id',$token_id);
+		$result = $CI->db->get();
+		return $result->num_rows();
+	}
+}
+
 if(!function_exists('count_dashboard_all')){
 	function count_dashboard_all($type) {
 		$CI =& get_instance();
@@ -384,7 +395,7 @@ if(!function_exists('get_all_application_v2')){
 		$CI->db->from("pending_item");
 		$CI->db->join('user', 'pending_item.user_id = user.user_id', 'inner');
 		$CI->db->join('user_addtional_info', 'pending_item.user_id = user_addtional_info.user_id', 'inner');
-		
+		$CI->db->where('pending_item.is_verified<>','1');
 		$query = $CI->db->get()->result_array();
 		return $query;
 	}
@@ -458,7 +469,7 @@ if(!function_exists('get_all_additional_info_field')){
 if(!function_exists('get_all_additional_info_field_view')){
 	function get_all_additional_info_field_view($user_id,$field) {
 		$CI =& get_instance();
-		if(user_info_count() == 0){
+		if(user_info_count2($user_id) == 0){
 			return '';
 		}
 		$CI->db->select("*");
@@ -655,6 +666,17 @@ if(!function_exists('user_info_count')){
 		$CI->db->select("*");
 		$CI->db->from("user_addtional_info");
 		$CI->db->where("user_id",client_session_val());
+		$result = $CI->db->get();
+		return $result->num_rows();
+	}
+}
+
+if(!function_exists('user_info_count2')){
+	function user_info_count2($user_id) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("user_addtional_info");
+		$CI->db->where("user_id",$user_id);
 		$result = $CI->db->get();
 		return $result->num_rows();
 	}
