@@ -175,7 +175,7 @@
                                 <div class="portfolio-info">
                                   <h4><?=$value['item_name']?></h4>
                                   <div class="portfolio-links">
-                                    <a href="<?=base_url()?>pending_upload/<?=$value['pending_item_id']?>/<?=$value['image_name']?>" data-gallery="portfolioGallery" class="portfokio-lightbox" title="<?=$value['item_name']?>"><i class="bi bi-plus"></i></a>
+                                    <a href="<?=base_url()?>pending_upload/<?=$value['pending_item_id']?>/<?=$value['image_name']?>" data-gallery="portfolioGallery" class="portfokio-lightbox" title="<p>Title: <?=$value['item_name']?></p><p>Description: <?=$value['item_description']?></p>"><i class="bi bi-plus"></i></a>
                                     <?php if($value['is_approved'] == '1'){ ?>
                                       <a href="<?=base_url()?>manage_bill/<?=$value['apply_for_item_id']?>" title="More Details"><i class="bi bi-link"></i></a>
                                     <?php } ?>
@@ -200,7 +200,7 @@
                                   <div class="portfolio-info">
                                     <h4><?=$value['item_name']?></h4>
                                     <div class="portfolio-links">
-                                      <a href="<?=base_url()?>pending_upload/<?=$value['pending_item_id']?>/<?=$value['image_name']?>" data-gallery="portfolioGallery" class="portfokio-lightbox" title="<?=$value['item_name']?>"><i class="bi bi-plus"></i></a>
+                                      <a href="<?=base_url()?>pending_upload/<?=$value['pending_item_id']?>/<?=$value['image_name']?>" data-gallery="portfolioGallery" class="portfokio-lightbox" title="<p>Title: <?=$value['item_name']?></p><p>Description: <?=$value['item_description']?></p>"><i class="bi bi-plus"></i></a>
                                       <?php if($value['is_approved'] == '1'){ ?>
                                         <a href="<?=base_url()?>manage_bill/<?=$value['apply_for_item_id']?>" title="More Details"><i class="bi bi-link"></i></a>
                                       <?php } ?>
@@ -227,7 +227,7 @@
                                     <h4><?=$value['item_name']?></h4>
                                     <div class="portfolio-links">
                                       <?php if($value['image_name'] != ''){ ?>
-                                        <a href="<?=base_url()?>pending_upload/<?=$value['pending_item_id']?>/<?=$value['image_name']?>" data-gallery="portfolioGallery" class="portfokio-lightbox" title="<?=$value['item_name']?>"><i class="bi bi-plus"></i></a>
+                                        <a href="<?=base_url()?>pending_upload/<?=$value['pending_item_id']?>/<?=$value['image_name']?>" data-gallery="portfolioGallery" class="portfokio-lightbox" title="<p>Title: <?=$value['item_name']?></p><p>Description: <?=$value['item_description']?></p>"><i class="bi bi-plus"></i></a>
                                         <a href="#" onclick="sweetalert_modal(`<?=$value['pending_item_id']?>`,`<?=$value['item_price']?>`,`<?=$value['min_downpayment']?>`,<?=$value['pending_item_id']?>)" title="More Details"><i class="bi bi-link"></i></a>
                                       <?php } ?>  
                                     </div>
