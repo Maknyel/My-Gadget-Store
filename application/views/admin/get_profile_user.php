@@ -170,6 +170,48 @@
 	                <div class="box-footer">
 	                </div>
               	</div>
+
+
+              	<div class=" box-primary">
+	                <div class="box-header with-border">
+	                  <h3 class="box-title">List of Loans</h3>
+	                  
+	                  <section id="portfolio" class="portfolio">
+
+	                    <div class="container" data-aos="fade-up">
+	                      <table id="datatable-buttons" class="table table-bordered table-striped">
+		                    <thead>
+		                      <tr>
+		                        <th>Product</th>
+		                        <th>Total Payment</th>
+		                        <th>Downpayment</th>
+		                        <th>Months</th>
+		                        <th>Bills Per Month</th>
+		                        <th>Status</th>
+		                      </tr>
+		                    </thead>
+		                    <tbody>
+		                      <?php foreach (get_all_application_own($id) as $key => $row) { ?>
+		                      <tr>
+		                        <td><?php echo $row['item_name'];?></td>
+		                        <td><?php echo $row['total_payment'];?></td>
+		                        <td><?php echo $row['downpayment'];?></td>
+		                        <td><?php echo $row['total_months'];?></td>          
+		                        <td><?php echo $row['per_month_bill'];?></td>
+		                        <td><?php echo ($row['is_approved'] == '1')?'Approved':'Pending';?></td>
+		                      </tr>
+		                   
+		                    <?php } ?>
+		                  </tbody>
+		                </table>
+	                      </div>
+	                    </section>
+	                </div>
+	                <div class="box-body">
+	                </div>
+	                <div class="box-footer">
+	                </div>
+              	</div>
             </div>
         </div>
     </div>

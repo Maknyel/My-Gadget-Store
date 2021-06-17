@@ -118,7 +118,7 @@ class Admin extends CI_Controller {
         $data = array(
             'title'             => global_page_function(),
             'page'              => 'Profile',
-            'is_datatables'     => FALSE,
+            'is_datatables'     => TRUE,
             'id'                => $id
         );
         

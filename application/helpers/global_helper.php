@@ -162,12 +162,21 @@ if(!function_exists('get_history_data')){
 }
 
 if(!function_exists('get_all_user_data')){
-	function get_all_user_data(){
+	function get_all_user_data($type=null){
 		$CI =& get_instance();
-		$CI->db->select('user.*,branch.*');
+		$CI->db->select('user.*,branch.*,user_addtional_info.is_verified');
 		$CI->db->from('user');
 		$CI->db->join('branch', 'user.branch_id = branch.branch_id', 'inner');
+		$CI->db->join('user_addtional_info', 'user.user_id = user_addtional_info.user_id', 'left');
 		// $CI->db->where('branch_id','5');
+		if($type){
+			if($type=='1'){
+				$CI->db->where('user_addtional_info.is_verified',$type);
+			}else{
+				$CI->db->where('user_addtional_info.is_verified',0);
+			}
+			
+		}
 		$query = $CI->db->get()->result_array();
 	
 		return ($query);
@@ -383,6 +392,20 @@ if(!function_exists('get_all_application')){
 		$CI->db->join('user', 'apply_for_item.user_id = user.user_id', 'inner');
 		$CI->db->join('user_addtional_info', 'apply_for_item.user_id = user_addtional_info.user_id', 'left');
 		
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+if(!function_exists('get_all_application_own')){
+	function get_all_application_own($id) {
+		$CI =& get_instance();
+		$CI->db->select("apply_for_item.*,pending_item.*,user.*,user_addtional_info.*");
+		$CI->db->from("apply_for_item");
+		$CI->db->join('pending_item', 'apply_for_item.product_id = pending_item.pending_item_id', 'inner');
+		$CI->db->join('user', 'apply_for_item.user_id = user.user_id', 'inner');
+		$CI->db->join('user_addtional_info', 'apply_for_item.user_id = user_addtional_info.user_id', 'left');
+		$CI->db->where('user.user_id',$id);
 		$query = $CI->db->get()->result_array();
 		return $query;
 	}

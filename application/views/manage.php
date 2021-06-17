@@ -17,10 +17,12 @@
         <form id="apply_form">
           <div class="modal-header">
             <h4 class="modal-title">Apply</h4>
+            <label><small>Note: color, GB RAM, Size, price range, brand, category, hrs power, design</small></label>
           </div>
           <div class="modal-body">
             <div class="form-group">
               <label>Message:</label>
+
               <textarea value="" class="form-control" name="message" id="message"></textarea>
               <script type="text/javascript">
                 new FroalaEditor('#apply_form textarea#message', {
