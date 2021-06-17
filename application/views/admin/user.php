@@ -14,7 +14,7 @@
 							 </thead>
 							 <tbody>
 									<?php	
-										foreach (get_all_user_data() as $key => $row) {
+										foreach (get_all_user_data(isset($_GET['type'])?$_GET['type']:'') as $key => $row) {
 										
 											$id=$row['user_id'];
 											
