@@ -461,21 +461,23 @@
               <form id="apply_form2">
                 <div class="modal-body">
                   <div class="form-group">
-                    <label class="">Upload Image</label>
+                    <label class="">Upload Proof Image</label>
                     
                       <img src="" id="img_only" height="auto" width="100%">
                       <div style="text-align: center;width:100%;">
-                        <button type="button" class="btn btn-primary" onclick="upload_file()">Upload Image</button>
+                        <button type="button" class="btn btn-primary" onclick="upload_file()">Upload Proof Image</button>
                       </div>
                   </div>
 
                   <div class="form-group">
-                    <label class="">Upload File</label>
+                    <label class="">Upload Contract File</label>
+                    <label><small>note: please download file and fillup the file:</small></label>
                       <div class="hideme" style="display:none;">
                         <a href="" id="img_only2" height="auto" width="100%">View</a>
                       </div>
                       <div style="text-align: center;width:100%;">
-                        <button type="button" class="btn btn-primary" onclick="upload_file2()">Upload File</button>
+                        <a class="btn btn-success" download="contract" href="<?=base_url()?>CONTRACT.docx">Download</a>
+                        <button type="button" class="btn btn-primary" onclick="upload_file2()">Upload Contract File</button>
                       </div>
                   </div>
 
