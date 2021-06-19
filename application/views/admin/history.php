@@ -17,7 +17,7 @@
 											$id=$row['log_id'];										
 									?>  
 								<tr>
-									<td><?php echo $row['name'];?></td>
+									<td><?php echo ($row['fname'] != '')?$row['fname'].' '.$row['lname']:$row['name'];?></td>
 									<td><?php echo $row['action']. " ".date("F d, Y - - h:i A", strtotime($row['date'])); ?></td>															
 								</tr>
 									<div id = "update<?php echo $id;?>" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">

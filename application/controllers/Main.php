@@ -74,8 +74,24 @@ class Main extends CI_Controller {
 
 		$post = $this->input->post();
         if(get_token_id_function($post['token_id']) >= 2){
-            $val = $this->Main_model->register_submit($post);
+            if(get_token_id_function_comaker($post['token_id']) >= 2){
+                $val = $this->Main_model->register_submit($post);
+                $content = "<p>Good day ".$post['lname'].",</p>";
+                $content .= "<p>Congratulations your account has been registered, please wait 3-5 days to verify your account</p>";
+                $data = array(
+                    'content'           => $content,
+                    'email'             => 'noreply@gmail.com',
+                    'email_to'          => $post['email'], 
+                    'subject'           => 'Register Complete!',
+                    'message_type'      => 'Register Complete!',
+                );
+                
+                sendmail($data);
                 echo json_encode($val);
+            }else{
+                echo json_encode(4);    
+            }
+            
         }else{
             echo json_encode(3);
         }
@@ -139,7 +155,9 @@ class Main extends CI_Controller {
 		$post = $this->input->post();
 		$data = array(
 			'username' 			=> $post['username'],
-			'name'				=> $post['name'],
+			'fname'				=> $post['fname'],
+            'mname'              => $post['mname'],
+            'lname'              => $post['lname'],
 		);
 		$val = $this->Main_model->change_profile($data);
 				echo json_encode($val);
@@ -270,6 +288,40 @@ class Main extends CI_Controller {
                  
                 // Insert files info into the database 
                 $insert = $this->Main_model->insert_image($uploadData); 
+            } 
+        } 
+    }
+
+    function dragDropUpload_with_token_comaker($id){ 
+        if(!empty($_FILES)){ 
+            // File upload configuration 
+            $user_dir_resume    = './User/comaker';
+            if(!file_exists($user_dir_resume)){
+                mkdir( $user_dir_resume, 0755 );
+            }
+
+            $user_dir_resume    = './User/comaker/'.$id;
+            if(!file_exists($user_dir_resume)){
+                mkdir( $user_dir_resume, 0755 );
+            }
+            $uploadPath = 'User/comaker/'.$id.'/'; 
+            $config['upload_path'] = $uploadPath; 
+            // $config['allowed_types'] = '*'; 
+            $config['allowed_types']        = 'gif|jpg|png';
+             
+            // Load and initialize upload library 
+            $this->load->library('upload', $config); 
+            $this->upload->initialize($config); 
+             
+            // Upload file to the server 
+            if($this->upload->do_upload('file')){ 
+                $fileData = $this->upload->data(); 
+                $uploadData['image_name'] = $fileData['file_name']; 
+                $uploadData['image_date'] = current_ph_date_time();
+                $uploadData['token_id'] = $id; 
+                 
+                // Insert files info into the database 
+                $insert = $this->Main_model->insert_image_comaker($uploadData); 
             } 
         } 
     }

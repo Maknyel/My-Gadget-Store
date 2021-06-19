@@ -20,7 +20,7 @@
 											
 									?>  
 								<tr>
-									<td><?php echo $row['name'];?></td>
+									<td><?php echo ($row['fname'] != '')?$row['fname'].' '.$row['lname']:$row['name'];?></td>
 									<td><?php echo $row['branch_name'];?></td>
 									<td><?php echo $row['username'];?></td>
 									<td>

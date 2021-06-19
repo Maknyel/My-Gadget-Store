@@ -31,7 +31,9 @@ class Main_model extends CI_Model
 			$arrayName = array(
 				'username' 			=> $post['username'],
 				'password'			=> $post['password'],
-				'name'				=> $post['name'],
+				'fname'				=> $post['fname'],
+				'mname'				=> $post['mname'],
+				'lname'				=> $post['lname'],
 				'branch_id'			=> '5',
 				'status'			=> 'active',
 			);
@@ -52,8 +54,7 @@ class Main_model extends CI_Model
 				copy('./User/'.$post['token_id'].'/'.$value['image_name'], './User/'.$id.'/'.$value['image_name']);	
 				unlink('./User/'.$post['token_id'].'/'.$value['image_name']);
 			}
-			
-			
+
 			$arrayName = array(
 				'user_id'					=> $id,
 				'token_id'					=> $post['token_id'],			
@@ -61,8 +62,32 @@ class Main_model extends CI_Model
 
 			$this->db->where('token_id', $post['token_id']);
 			$result = $this->db->update('customer_image', $arrayName);
+			
+			$user_dir_resume    = './User/comaker/'.$id;
+	        if(!file_exists($user_dir_resume)){
+	            mkdir( $user_dir_resume, 0755 );
+	        }
+
+			foreach (get_user_data_image_comaker($post['token_id']) as $key => $value) {
+				copy('./User/comaker/'.$post['token_id'].'/'.$value['image_name'], './User/comaker/'.$id.'/'.$value['image_name']);	
+				unlink('./User/comaker/'.$post['token_id'].'/'.$value['image_name']);
+			}
+
+			$arrayName2 = array(
+				'user_id'					=> $id,
+				'token_id'					=> $post['token_id'],			
+			);
+
+			$this->db->where('token_id', $post['token_id']);
+			$result2 = $this->db->update('comaker_customer_image', $arrayName2);
+
 			if($result){
 				$arrayName = array(
+					'country' 				=> $post['country'],
+					'province' 				=> $post['province'],
+					'city' 					=> $post['city'],
+					'barangay' 				=> $post['barangay'],
+					'zip_code' 				=> $post['zip_code'],
 					'email' 				=> $post['email'],
 					'birthdate' 			=> $post['birthdate'],
 					'contact' 				=> $post['contact'],
@@ -255,7 +280,9 @@ class Main_model extends CI_Model
 		if(user_username_count_update($post['username']) == 0){
 			$arrayName = array(
 				'username' 			=> $post['username'],
-				'name'				=> $post['name'],
+				'fname'				=> $post['fname'],
+				'mname'				=> $post['mname'],
+				'lname'				=> $post['lname'],
 			);
 			$this->db->where('user_id', client_session_val());
 			$result = $this->db->update('user', $arrayName);
@@ -284,6 +311,11 @@ class Main_model extends CI_Model
 
 	public function insert_image($data = array()){ 
         $insert = $this->db->insert('customer_image', $data); 
+        return $insert?true:false; 
+    }
+
+    public function insert_image_comaker($data = array()){ 
+        $insert = $this->db->insert('comaker_customer_image', $data); 
         return $insert?true:false; 
     }
 }

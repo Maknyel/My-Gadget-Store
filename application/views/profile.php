@@ -12,11 +12,19 @@
               <div style="height: 100px;"></div>
               <form id="profile_form">
                 <div class="form-group has-feedback">
-                  <label>Fullname:</label>
-                  <input type="text" class="form-control" value="<?=get_user_data('name')?>" placeholder="Fullname" name="name" id="name" required="">                
+                  <label>Firstname:<small style="color:red;">*</small></label>
+                  <input type="text" class="form-control" value="<?=get_user_data('fname')?>" placeholder="Firstname" name="fname" id="fname" required="">                
                 </div>
                 <div class="form-group has-feedback">
-                  <label>Username:</label>
+                  <label>Middlename:</label>
+                  <input type="text" class="form-control" value="<?=get_user_data('mname')?>" placeholder="Middlename" name="mname" id="mname">                
+                </div>
+                <div class="form-group has-feedback">
+                  <label>Lastname:<small style="color:red;">*</small></label>
+                  <input type="text" class="form-control" value="<?=get_user_data('lname')?>" placeholder="Lastname" name="lname" id="lname" required="">                
+                </div>
+                <div class="form-group has-feedback">
+                  <label>Username:<small style="color:red;">*</small></label>
                   <input type="text" class="form-control" value="<?=get_user_data('username')?>" placeholder="Username" name="username" id="username" required="">                
                 </div>
                 <div style="height: 10px;"></div>
@@ -30,18 +38,18 @@
               <div style="height: 100px;"></div>
               <form id="profile_form_password">
                 <div class="form-group has-feedback">
-                  <label>Current Password:</label>
+                  <label>Current Password:<small style="color:red;">*</small></label>
                   <input type="password" class="form-control" placeholder="Current Password" name="c_password" id="c_password" required="">
                   <input type="hidden" class="form-control" value="<?=get_user_data('password')?>" name="current_password" id="current_password" required="">                
                 </div>
 
                 <div class="form-group has-feedback">
-                  <label>New Password:</label>
+                  <label>New Password:<small style="color:red;">*</small></label>
                   <input type="password" class="form-control" placeholder="New Password" name="password" id="password" required="">                
                 </div>
 
                 <div class="form-group has-feedback">
-                  <label>Retype Password:</label>
+                  <label>Retype Password:<small style="color:red;">*</small></label>
                   <input type="password" class="form-control" placeholder="Retype Password" name="retype_password" id="retype_password" required="">                
                 </div>
 
@@ -62,19 +70,19 @@
                   <form method="post" id="add_creator">
                   <div class="row">
                     <div class="col-md-4">  
-                      <label for="email">Email address</label>
+                      <label for="email">Email address<small style="color:red;">*</small></label>
                       <div class="input-group col-md-12">
                           <input type="email" class="form-control pull-right" value="<?=get_all_additional_info_field('email')?>" id="email" name="email" placeholder="Email Address" required="">
                         </div><!-- /.input group -->
                       </div><!-- /.form group -->
                     <div class="col-md-4">  
-                      <label for="birthdate">Birthday</label>
+                      <label for="birthdate">Birthday<small style="color:red;">*</small></label>
                       <div class="input-group col-md-12">
                           <input type="date" class="form-control pull-right" id="birthdate" max="<?=current_ph_date()?>" value="<?=get_all_additional_info_field('birthdate')?>" name="birthdate" required="">
                       </div><!-- /.input group -->
                     </div>
                     <div class="col-md-4">  
-                      <label for="contact">Tel # and Cellphone #</label>
+                      <label for="contact">Tel # and Cellphone #<small style="color:red;">*</small></label>
                       <div class="input-group col-md-12">
                           <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control pull-right" id="contact" value="<?=get_all_additional_info_field('contact')?>" name="contact" placeholder="Customer Contact #" required="">
                       </div><!-- /.input group -->
@@ -84,13 +92,44 @@
                   <h3 class="box-title">Address</h3>
                   <div class="row">
                     <div class="col-md-12">  
-                      <label for="address">Present Home Address</label>
+                      <label for="address">Present Home Address<small style="color:red;">*</small></label>
                       <div class="input-group col-md-12">
                           <textarea type="text" class="form-control pull-right" id="address" name="address" placeholder="Customer Complete Address" required=""><?=get_all_additional_info_field('address')?></textarea>
                       </div><!-- /.input group -->
                     </div>
+                    <div class="col-md-4">
+                      <label for="country">Country<small style="color:red;">*</small></label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Country" name="country" id="country" value="<?=get_all_additional_info_field('country')?>" required="">                
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="province">Province<small style="color:red;">*</small></label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Province" name="province" id="province" value="<?=get_all_additional_info_field('province')?>" required="">                
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="city">City<small style="color:red;">*</small></label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="City" name="city" id="city" value="<?=get_all_additional_info_field('city')?>" required="">                
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                      <label for="barangay">Barangay<small style="color:red;">*</small></label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Barangay" name="barangay" id="barangay" value="<?=get_all_additional_info_field('barangay')?>" required="">                
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="zip_code">Zipcode<small style="color:red;">*</small></label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Zipcode" name="zip_code" id="zip_code" value="<?=get_all_additional_info_field('zip_code')?>" required="">                
+                      </div>
+                    </div>
                     <div class="col-md-12" style="margin:10px 0px;">
-                      <label for="house_status">House Status:</label>
+                      <label for="house_status">House Status:<small style="color:red;">*</small></label>
 
                       <input type="radio" class="btn-check" <?=(get_all_additional_info_field('house_status') == 'owned')?'checked':''?> name="house_status" onclick="changeradio('0')" id="option2" autocomplete="off" required="" value="owned" />
                       <label class="btn btn-secondary" for="option2">Owned</label>
@@ -235,6 +274,36 @@
                 <div class="box-footer">
                 </div>
               </div>
+
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Comakers Valid Id's</h3>
+                  
+                  <section id="portfolio" class="portfolio">
+
+                    <div class="container" data-aos="fade-up">
+                      <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+                        <?php foreach(get_all_my_ids_comaker() AS $key => $value){ ?>
+                          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                            <div class="portfolio-wrap">
+                              <img src="<?=base_url()?>User/comaker/<?=$value['user_id']?>/<?=$value['image_name']?>" class="img-fluid" alt="">
+                              <div class="portfolio-info">
+                                <div class="portfolio-links">
+                                  <a href="<?=base_url()?>User/comaker/<?=$value['user_id']?>/<?=$value['image_name']?>" data-gallery="portfolioGallery" class="portfokio-lightbox"><i class="bi bi-plus"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <?php } ?>
+                        </div>
+                      </div>
+                    </section>
+                </div>
+                <div class="box-body">
+                </div>
+                <div class="box-footer">
+                </div>
+              </div>
             <?php } ?>
 
             
@@ -295,10 +364,12 @@
     $(document).on('submit', '#profile_form', function(event){
           event.preventDefault();
           var username = $('#profile_form #username').val();
-          var name = $('#profile_form #name').val();
+          var fname = $('#profile_form #fname').val();
+          var mname = $('#profile_form #mname').val();
+          var lname = $('#profile_form #lname').val();
           
           
-          var data = {'username':username,'name':name};
+          var data = {'username':username,'fname':fname,'mname':mname,'lname':lname};
           // alert_data('Success',JSON.stringify(data));
           $.ajax({
             type:'POST',

@@ -88,6 +88,19 @@ if(!function_exists('get_user_data_image')){
 	}
 }
 
+if(!function_exists('get_user_data_image_comaker')){
+	function get_user_data_image_comaker($token_id){
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->from('comaker_customer_image');
+		$CI->db->where('token_id', $token_id);
+		$query = $CI->db->get()->result_array();
+		
+		return ($query);
+
+	}
+}
+
 
 if(!function_exists('get_user_data_admin')){
 	function get_user_data_admin($user_id,$field){
@@ -295,6 +308,17 @@ if(!function_exists('get_token_id_function')){
 	}
 }
 
+if(!function_exists('get_token_id_function_comaker')){
+	function get_token_id_function_comaker($token_id) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("comaker_customer_image");
+		$CI->db->where('token_id',$token_id);
+		$result = $CI->db->get();
+		return $result->num_rows();
+	}
+}
+
 if(!function_exists('count_dashboard_all')){
 	function count_dashboard_all($type) {
 		$CI =& get_instance();
@@ -461,11 +485,33 @@ if(!function_exists('get_all_my_ids')){
 	}
 }
 
+if(!function_exists('get_all_my_ids_comaker')){
+	function get_all_my_ids_comaker() {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("comaker_customer_image");
+		$CI->db->where('user_id',client_session_val());
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
 if(!function_exists('get_all_my_ids_admin')){
 	function get_all_my_ids_admin($user_id) {
 		$CI =& get_instance();
 		$CI->db->select("*");
 		$CI->db->from("customer_image");
+		$CI->db->where('user_id',$user_id);
+		$query = $CI->db->get()->result_array();
+		return $query;
+	}
+}
+
+if(!function_exists('get_all_my_ids_admin_comaker')){
+	function get_all_my_ids_admin_comaker($user_id) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("comaker_customer_image");
 		$CI->db->where('user_id',$user_id);
 		$query = $CI->db->get()->result_array();
 		return $query;

@@ -19,26 +19,42 @@
                   <div class="card-body">
                     <form action="<?php echo base_url(); ?>Main/dragDropUpload_with_token/<?=$token?>" class="dropzone"></form>
                   </div>
+                <h3 class="box-title">Comakers Id's</h3>
+                      <div class="card-body">
+                        <form action="<?php echo base_url(); ?>Main/dragDropUpload_with_token_comaker/<?=$token?>" class="dropzone"></form>
+                      </div> 
                 </div>
                 <div class="box-body">
                   <!-- Date range -->
                   <form method="post" id="loginform">
                   <div class="row">
                     <div class="col-md-4">
-                      <label for="email">Fullname</label>
+                      <label for="email">Firstname<small style="color:red;">*</small></label>
                       <div class="form-group has-feedback">
-                        <input type="text" class="form-control" placeholder="Fullname" name="name" id="name" required="">
+                        <input type="text" class="form-control" placeholder="Firstname" name="fname" id="fname" required="">
                         <input type="hidden" value="<?=$token?>" class="form-control" name="token_id" id="token_id" required="">                
                       </div>
                     </div>
                     <div class="col-md-4">
-                      <label for="email">Username</label>
+                      <label for="email">Middlename</label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Middlename" name="mname" id="mname">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="email">Lastname<small style="color:red;">*</small></label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Lastname" name="lname" id="lname" required="">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="email">Username<small style="color:red;">*</small></label>
                       <div class="form-group has-feedback">
                         <input type="text" class="form-control" placeholder="Username" name="username" id="username" required="">                
                       </div>
                     </div>
                     <div class="col-md-4">
-                      <label for="email">Password</label>
+                      <label for="email">Password<small style="color:red;">*</small></label>
                       <div class="form-group has-feedback">
                         <input type="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Password" name="password" id="password" required="">
                       </div>
@@ -46,19 +62,19 @@
                   </div>
                   <div class="row">
                     <div class="col-md-4">  
-                      <label for="email">Email address</label>
+                      <label for="email">Email address<small style="color:red;">*</small></label>
                       <div class="input-group ">
                           <input type="email" class="form-control pull-right" value="<?=get_all_additional_info_field('email')?>" id="email" name="email" placeholder="Email Address" required="">
                         </div><!-- /.input group -->
                       </div><!-- /.form group -->
                     <div class="col-md-4">  
-                      <label for="birthdate">Birthday</label>
+                      <label for="birthdate">Birthday<small style="color:red;">*</small></label>
                       <div class="input-group ">
                           <input type="date" class="form-control pull-right" id="birthdate" max="<?=current_ph_date()?>" value="<?=get_all_additional_info_field('birthdate')?>" name="birthdate" required="">
                       </div><!-- /.input group -->
                     </div>
                     <div class="col-md-4">  
-                      <label for="contact">Tel # and Cellphone #</label>
+                      <label for="contact">Tel # and Cellphone #<small style="color:red;">*</small></label>
                       <div class="input-group ">
                           <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' class="form-control pull-right" id="contact" value="<?=get_all_additional_info_field('contact')?>" name="contact" placeholder="Customer Contact #" required="">
                       </div><!-- /.input group -->
@@ -68,13 +84,44 @@
                   <h3 class="box-title">Address</h3>
                   <div class="row">
                     <div class="">  
-                      <label for="address">Present Home Address</label>
+                      <label for="address">Present Home Address<small style="color:red;">*</small></label>
                       <div class="input-group ">
                           <textarea type="text" class="form-control pull-right" id="address" name="address" placeholder="Customer Complete Address" required=""><?=get_all_additional_info_field('address')?></textarea>
                       </div><!-- /.input group -->
                     </div>
+                    <div class="col-md-4">
+                      <label for="country">Country<small style="color:red;">*</small></label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Country" name="country" id="country" required="">                
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="province">Province<small style="color:red;">*</small></label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Province" name="province" id="province" required="">                
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="city">City<small style="color:red;">*</small></label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="City" name="city" id="city" required="">                
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                      <label for="barangay">Barangay<small style="color:red;">*</small></label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Barangay" name="barangay" id="barangay" required="">                
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="zip_code">Zipcode<small style="color:red;">*</small></label>
+                      <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Zipcode" name="zip_code" id="zip_code" required="">                
+                      </div>
+                    </div>
                     <div class="" style="margin:10px 0px;">
-                      <label for="house_status">House Status:</label>
+                      <label for="house_status">House Status:<small style="color:red;">*</small></label>
 
                       <input type="radio" class="btn-check" name="house_status" onclick="changeradio('0')" id="option2" autocomplete="off" required="" value="owned" />
                       <label class="btn btn-secondary" for="option2">Owned</label>
@@ -161,12 +208,14 @@
                           <input type="text" class="form-control pull-right" id="comaker" value="<?=get_all_additional_info_field('comaker')?>" name="comaker" placeholder="Name of Co-Maker">
                         </div>  
                       </div>
-                    <div class="col-md-6">
-                      <label for="comaker_details">Present Home Address &amp; Telephone # of Co-Maker</label>
-                      <div class="input-group ">
-                          <input type="text" class="form-control pull-right" id="comaker_details" value="<?=get_all_additional_info_field('comaker_details')?>" name="comaker_details" placeholder="Present Home Address &amp; Telephone # of Co-Maker">
+                      <div class="col-md-6">
+                        <label for="comaker_details">Present Home Address &amp; Telephone # of Co-Maker</label>
+                        <div class="input-group ">
+                            <input type="text" class="form-control pull-right" id="comaker_details" value="<?=get_all_additional_info_field('comaker_details')?>" name="comaker_details" placeholder="Present Home Address &amp; Telephone # of Co-Maker">
                         </div>  
-                      </div> 
+                      </div>
+
+                      
 
                       
                     
@@ -221,6 +270,8 @@
                 alert_data('Error',"Username Exists",'');
               }else if(data == 3){
                 alert_data('Error',"Please Upload atleast 2 valid Id",'');
+              }else if(data == 4){
+                alert_data('Error',"Please Upload atleast 2 comakers valid Id",'');
               }else{
                 alert_data('Error',"Error was encountered. please refresh the page",'');
               }

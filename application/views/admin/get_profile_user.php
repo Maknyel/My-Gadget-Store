@@ -33,10 +33,41 @@
 		                  <h3 class="box-title">Address</h3>
 		                  <div class="row">
 		                    <div class="col-md-12">  
-		                      <label for="address">Present Home Address</label>
+		                      <label for="address">Address</label>
 		                      <div class="input-group col-md-12">
 		                          <textarea readonly="" type="text" class="form-control pull-right" id="address" name="address" placeholder="Customer Complete Address" required=""><?=get_all_additional_info_field_view($id,'address')?></textarea>
 		                      </div><!-- /.input group -->
+		                    </div>
+		                    <div class="col-md-4">
+		                      <label for="country">Country</label>
+		                      <div class="form-group has-feedback">
+		                        <input type="text" class="form-control" placeholder="Country" name="country" id="country" readonly="" value="<?=get_all_additional_info_field_view($id,'country')?>" required="">                
+		                      </div>
+		                    </div>
+		                    <div class="col-md-4">
+		                      <label for="province">Province</label>
+		                      <div class="form-group has-feedback">
+		                        <input type="text" class="form-control" placeholder="Province" name="province" id="province" readonly="" value="<?=get_all_additional_info_field_view($id,'province')?>" required="">                
+		                      </div>
+		                    </div>
+		                    <div class="col-md-4">
+		                      <label for="city">City</label>
+		                      <div class="form-group has-feedback">
+		                        <input type="text" class="form-control" placeholder="City" name="city" id="city" readonly="" value="<?=get_all_additional_info_field_view($id,'city')?>" required="">                
+		                      </div>
+		                    </div>
+		                    
+		                    <div class="col-md-4">
+		                      <label for="barangay">Barangay</label>
+		                      <div class="form-group has-feedback">
+		                        <input type="text" class="form-control" placeholder="Barangay" name="barangay" id="barangay" readonly="" value="<?=get_all_additional_info_field_view($id,'barangay')?>" required="">                
+		                      </div>
+		                    </div>
+		                    <div class="col-md-4">
+		                      <label for="zip_code">Zipcode</label>
+		                      <div class="form-group has-feedback">
+		                        <input type="text" class="form-control" placeholder="Zipcode" name="zip_code" id="zip_code" readonly="" value="<?=get_all_additional_info_field_view($id,'zip_code')?>" required="">                
+		                      </div>
 		                    </div>
 		                    <div class="col-md-12" style="margin:10px 0px;">
 		                      <label for="house_status">House Status:</label>
@@ -157,6 +188,32 @@
 	                          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
 	                            <div class="portfolio-wrap exp-img-wrapper">
 	                              <img src="<?=base_url()?>User/<?=$value['user_id']?>/<?=$value['image_name']?>" class="img-fluid imgsrc" alt="">
+	                              
+	                            </div>
+	                          </div>
+	                          <?php } ?>
+	                        </div>
+	                      </div>
+	                    </section>
+	                </div>
+	                <div class="box-body">
+	                </div>
+	                <div class="box-footer">
+	                </div>
+              	</div>
+
+              	<div class=" box-primary">
+	                <div class="box-header with-border">
+	                  <h3 class="box-title">Comaker Valid Id's</h3>
+	                  
+	                  <section id="portfolio" class="portfolio">
+
+	                    <div class="container" data-aos="fade-up">
+	                      <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+	                        <?php foreach(get_all_my_ids_admin_comaker($id) AS $key => $value){ ?>
+	                          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+	                            <div class="portfolio-wrap exp-img-wrapper">
+	                              <img src="<?=base_url()?>User/comaker/<?=$value['user_id']?>/<?=$value['image_name']?>" class="img-fluid imgsrc" alt="">
 	                              
 	                            </div>
 	                          </div>

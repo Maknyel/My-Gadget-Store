@@ -176,7 +176,7 @@
                     <tbody>
                       <?php foreach (get_all_application_v2() as $key => $row) { ?>
                       <tr>
-                        <td><?php echo $row['name'];?></td>
+                        <td><?php echo ($row['fname'] != '')?$row['fname'].' '.$row['lname']:$row['name'];?></td>
                         <td><?php echo $row['item_name'];?></td>
                         <td><?php echo $row['item_description'];?></td>
                         <td><?php echo $row['item_price'];?></td>

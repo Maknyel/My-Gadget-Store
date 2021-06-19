@@ -157,8 +157,8 @@
                   <h1>Transactions - <?=$manage_data?></h1>
                   <ul class="nav nav-tabs">
                     <li class="<?=isset($_GET['type'])?(($_GET['type'] == 'history')?'active':''):''?>"><a data-toggle="tab" href="<?=base_url()?>manage?type=history">History</a></li>
-                    <li class="<?=isset($_GET['type'])?'':'active'?>"><a data-toggle="tab" href="<?=base_url()?>manage">Pending</a></li>
-                    <li class="<?=isset($_GET['type'])?(($_GET['type'] == 'for_payment')?'active':''):''?>"><a data-toggle="tab" href="<?=base_url()?>manage?type=for_payment">For Payment</a></li>
+                    <li class="<?=isset($_GET['type'])?'':'active'?>"><a data-toggle="tab" href="<?=base_url()?>manage">Pending payment</a></li>
+                    <li class="<?=isset($_GET['type'])?(($_GET['type'] == 'for_payment')?'active':''):''?>"><a data-toggle="tab" href="<?=base_url()?>manage?type=for_payment">For Downpayment</a></li>
                     <li class="<?=isset($_GET['type'])?(($_GET['type'] == 'pending_item')?'active':''):''?>"><a data-toggle="tab" href="<?=base_url()?>manage?type=pending_item">Pending Item</a></li>
                     <li class="<?=isset($_GET['type'])?(($_GET['type'] == 'generate_esign')?'active':''):''?>"><a data-toggle="tab" href="<?=base_url()?>manage?type=generate_esign">Generate Esign</a></li>
                   </ul>
