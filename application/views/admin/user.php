@@ -41,7 +41,7 @@
 											<a href="<?=base_url()?>admin/user_info/<?=$row['user_id']?>" class="btn btn-default btn-xs" target="_blank"><i class = "fa fa-eye"></i> View</a>
 											<?php if(get_user_additional_info_field_count($row['user_id']) > 0){ ?>
 												<?php if(get_user_additional_info_field($row['user_id'],'is_verified') == '0'){ ?>
-													<a href="<?=base_url()?>Admin/verify_user?user_id=<?php echo $row['user_id'];?>&email=<?=get_user_additional_info_field($row['user_id'],'email')?>&name=<?php echo $row['name'];?>" class="btn btn-success btn-xs">Verify User</a>
+													<a href="<?=base_url()?>Admin/verify_user?user_id=<?php echo $row['user_id'];?>&email=<?=get_user_additional_info_field($row['user_id'],'email')?>&name=<?php echo ($row['fname'] != '')?$row['fname'].' '.$row['lname']:$row['name'];?>" class="btn btn-success btn-xs">Verify User</a>
 												<?php } ?>
 											<?php } ?>
 										<?php } ?>	

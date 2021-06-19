@@ -311,6 +311,18 @@ if(!function_exists('get_user_additional_info_field')){
 	}
 }
 
+if(!function_exists('get_pending_item_val')){
+	function get_pending_item_val($pending_item_id,$field) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("pending_item");
+		$CI->db->where("pending_item_id",$pending_item_id);
+		$query = $CI->db->get()->result_array();
+		$val = current($query);
+		return ($val[$field]);
+	}
+}
+
 if(!function_exists('get_user_additional_info_field_count')){
 	function get_user_additional_info_field_count($user_id) {
 		$CI =& get_instance();
@@ -588,6 +600,24 @@ if(!function_exists('get_all_branch')){
 	}
 }
 
+if(!function_exists('insert_notif')){
+	function insert_notif($message,$date_confirm,$user_id) {
+		$CI =& get_instance();
+			$data = array(
+				'message' 		=> $message,
+				'date_added' 	=> current_ph_date_time(),
+				'date_confirm' 	=> $date_confirm,
+				'user_id' 		=> $user_id,
+			);
+			$result = $CI->db->insert('notification', $data);
+			if($result){
+				return 1;
+			}else{
+				return 0;
+			}
+		
+	}
+}
 
 if(!function_exists('table_cruds')){
 	function table_cruds($post) {

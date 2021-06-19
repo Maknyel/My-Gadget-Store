@@ -204,6 +204,7 @@ class Admin extends CI_Controller {
         $get = $this->input->get();
         $val = update_user_id($get['user_id']);
         if($val){
+            insert_notif('Congratulations your account has been verified by the administrator','',$get['user_id']);
             $content = "<p>Hi ".$get['name'].",</p>";
             $content .= "<p>Congratulations your account has been verified by the administrator</p>";
             $data = array(
@@ -235,6 +236,20 @@ class Admin extends CI_Controller {
 
     public function update_pending_image(){
         $post = $this->input->post();
+        $name = (get_user_data_admin(get_pending_item_val($post['pending_item_id'],'user_id'),'fname') != '')?get_user_data_admin(get_pending_item_val($post['pending_item_id'],'user_id'),'fname').' '.get_user_data_admin(get_pending_item_val($post['pending_item_id'],'user_id'),'lname'):get_user_data_admin(get_pending_item_val($post['pending_item_id'],'user_id'),'name');
+        $content = "<p>Hi ".$name.",</p>";
+            $content .= "<p>Congratulations your applied loan has been updated by the administrator</p>";
+            $data = array(
+                'content'           => $content,
+                'email'             => 'noreply@gmail.com',
+                'email_to'          => get_user_additional_info_field(get_pending_item_val($post['pending_item_id'],'user_id'),'email'), 
+                'subject'           => 'Update applied loan',
+                'message_type'      => 'Update applied loan',
+            );
+            
+            sendmail($data);
+
+        insert_notif('Congratulations your applied loan has been updated by the administrator','',get_pending_item_val($post['pending_item_id'],'user_id'));
         echo json_encode($this->Admin_class->update_pending_image($post));
     }
 
