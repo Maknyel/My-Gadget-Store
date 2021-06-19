@@ -108,6 +108,7 @@ if(!function_exists('notification_count_all')){
 		$CI->db->select('*');
 		$CI->db->from('notification');
 		$CI->db->where('user_id', client_session_val());
+		$CI->db->where('is_read', 0);
 		$result = $CI->db->get();
 		return $result->num_rows();
 	}

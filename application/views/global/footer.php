@@ -99,7 +99,7 @@
             data:{},
             success:function(data)
             {
-              $('#notif_count').html("");
+              $('#notif_count').html(0);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
 
