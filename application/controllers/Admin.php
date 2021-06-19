@@ -267,13 +267,13 @@ class Admin extends CI_Controller {
                 'content'           => $content,
                 'email'             => 'noreply@gmail.com',
                 'email_to'          => get_user_additional_info_field(get_billing_item_val($post['apply_for_item_id'],'user_id'),'email'), 
-                'subject'           => 'Update applied loan',
-                'message_type'      => 'Update applied loan',
+                'subject'           => 'Approved billing payment',
+                'message_type'      => 'Approved billing payment',
             );
             
             sendmail($data);
 
-        insert_notif('Congratulations your billing payment has been approved by the administrator','',get_billing_item_val($post['apply_for_item_id'],'user_id'));
+        insert_notif('Congratulations your billing payment has been approved by the administrator',get_billing_item_val($post['apply_for_item_id'],'datetime_pay'),get_billing_item_val($post['apply_for_item_id'],'user_id'));
         echo json_encode(confirm_bill($post));
     }
 

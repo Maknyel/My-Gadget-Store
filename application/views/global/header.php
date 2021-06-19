@@ -64,7 +64,28 @@
       </a>
 
       <nav id="navbar" class="navbar">
+          
         <ul>
+          <?php if(client_session_val()){ ?>
+            <li class="dropdown"><a href="#"><i class="fa fa-bell"></i></a>
+              <ul>
+                <?php foreach (get_all_notification() as $key => $value) { ?>
+                  <li class="dropdown" style="width: 50px;">
+                    <?php if($key != 0){ ?>
+                      <hr>
+                    <?php } ?>  
+                      
+                    <p style="word-break: break-word;padding: 10px;"><?=$value['message']?>
+                    <br>
+                    <?=$value['date_added']?></p>
+                  </li>
+                <?php } ?>
+                
+                
+                
+              </ul>
+            </li>
+          <?php } ?>
           <li><a class="nav-link scrollto active" href="<?=base_url()?>">Home</a></li>
           <li class="dropdown"><a href="#"><span>Profile</span> <i class="bi bi-chevron-down"></i></a>
             <ul>

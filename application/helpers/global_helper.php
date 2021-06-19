@@ -89,6 +89,18 @@ if(!function_exists('get_user_pending_item')){
 	}
 }
 
+if(!function_exists('get_all_notification')){
+	function get_all_notification(){
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->from('notification');
+		$CI->db->where('user_id', client_session_val());
+		$result = $CI->db->get()->result_array();
+		return $result;
+
+	}
+}
+
 if(!function_exists('get_user_data_image')){
 	function get_user_data_image($token_id){
 		$CI =& get_instance();
