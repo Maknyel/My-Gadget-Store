@@ -107,6 +107,14 @@ class Main extends CI_Controller {
 			
 	}
 
+    public function get_brand_entity(){
+
+        $post = $this->input->post();
+        $val = get_brand_entity($post);
+                echo json_encode($val);
+            
+    }
+
 	public function apply_form(){
 
 		$post = $this->input->post();

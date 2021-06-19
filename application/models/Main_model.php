@@ -133,6 +133,8 @@ class Main_model extends CI_Model
 	public function add_pending($post){
 		$data = array(
 			'message'					=> $post['message'],
+			'category'					=> $post['category'],
+			'brand'						=> $post['brand'],
 			'user_id'					=> client_session_val(),
 			'date_added' 				=> current_ph_date_time(),
 			);

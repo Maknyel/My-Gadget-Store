@@ -61,6 +61,20 @@ if(!function_exists('get_user_data')){
 	}
 }
 
+if(!function_exists('get_brand_entity')){
+	function get_brand_entity($field){
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->from('product');
+		$CI->db->where('prod_name', $field['brand']);
+		$query = $CI->db->get()->result_array();
+		$query = current($query);
+
+		return ($query);
+
+	}
+}
+
 
 if(!function_exists('get_user_pending_item')){
 	function get_user_pending_item(){
@@ -258,6 +272,17 @@ if(!function_exists('practice1')){
 		);
 
 		return $arrayName;
+
+	}
+}
+
+if(!function_exists('category_brand')){
+	function category_brand() {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("list_of_category");
+		$query = $CI->db->get()->result_array();
+		return $query;
 
 	}
 }
@@ -804,6 +829,7 @@ if(!function_exists('product_function')){
 		switch ($post['method']) {
 			case 'add':
 				$arrayName = array(
+					'prod_category'	=> json_encode($post['prod_category']),
 					'branch_id' => $post['branch_id'],
 					'prod_desc' => $post['prod_desc'],
 					'prod_name' => $post['prod_name'],
@@ -821,6 +847,7 @@ if(!function_exists('product_function')){
 
 			case 'edit':
 				$arrayName = array(
+					'prod_category'	=> json_encode($post['prod_category']),
 					'branch_id' => $post['branch_id'],
 					// 'prod_desc' => $post['prod_desc'],
 					'prod_name' => $post['prod_name'],

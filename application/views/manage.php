@@ -21,6 +21,23 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
+              <label>Brand:</label>
+              <select class="form-control" name="brand" id="brand" required>
+                <option selected disabled=""></option>
+                <?php foreach(get_all_product() AS $key => $value){ ?>
+                  <option><?=$value['prod_name']?></option>
+                <?php } ?>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Category:</label>
+              <select class="form-control" name="category" id="category" required>
+                
+              </select>
+            </div>
+
+            <div class="form-group">
               <label>Message:</label>
 
               <textarea value="" class="form-control" name="message" id="message"></textarea>
@@ -57,6 +74,30 @@
 
   $(document).ready( function () {
     $('.modal-new-design').hide();
+
+    $(document).on('change keyup','#apply_form #brand',function(e){
+      $('#apply_form #category').val('');
+      $.ajax({
+         type:'POST',
+         dataType:'JSON',
+         url:base_url+'Main/get_brand_entity',
+         data:{'brand':$('#apply_form #brand').val()},
+         success:function(value)
+         {
+           $('#apply_form #category').html("");
+           if(value['prod_category'] != ''){
+            $.each(JSON.parse(value['prod_category']), function (index, element) {
+              $('#apply_form #category').append('<option value="'+element+'">'+element+'</option>');
+             });
+           }
+             
+            
+
+         }
+
+      });
+
+    });
   } );
 
   $(document).on('submit', '#apply_form', function(event){

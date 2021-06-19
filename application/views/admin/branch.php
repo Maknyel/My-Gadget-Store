@@ -53,6 +53,20 @@
 				                          	<span class="fa fa-person form-control-feedback right" aria-hidden="true" ></span>
 				                        </div>
 				                    </div>
+
+				                    <div class="form-group">
+				                        <label class="col-md-12 col-sm-12 col-xs-12">Category</label>
+				                        <div class="col-md-12 col-sm-12 col-xs-12">
+				                          	<select style = "resize:none;" name = "prod_category[]" id="prod_category" class="form-control" required="" multiple="">
+				                          		<?php foreach (category_brand() as $key => $value) { ?>
+				                          			<option><?=$value['category_name']?></option>
+				                          		<?php } ?>
+				                          	</select>
+				                          	<span class="fa fa-person form-control-feedback right" aria-hidden="true" ></span>
+				                        </div>
+				                    </div>
+
+				                    
 				                    <div class="form-group">
 				                        <label class="col-md-12 col-sm-12 col-xs-12">Brand Descrption</label>
 				                        <div class="col-md-12 col-sm-12 col-xs-12">
@@ -197,6 +211,7 @@
 								<tr>
 									<th>Brand Code</th>
 									<th>Brand Name</th>
+									<th>Category</th>
 									<th>Description</th>
 									<th>Image</th>
 									<!-- <th>Price</th> -->
@@ -212,6 +227,7 @@
 								<tr>
 									<td><?php echo $row1['serial'];?></td>
 									<td><?php echo $row1['prod_name'];?></td>
+									<td><?php echo $row1['prod_category'];?></td>
 									<td><?php echo $row1['prod_desc'];?></td>
 									<td>
 										<img height="auto" width="100%" src="<?=base_url()?>Product/<?=$row1['image']?>">
@@ -241,7 +257,14 @@
 														<label>Brand Name</label>
 															<input type="text" name = "prod_name" class="form-control" value = "<?php echo $row1['prod_name'];?>">
 															<br/>
-														<!-- <label>Brand Description</label>
+														<label>Category</label>
+									                          	<select style = "resize:none;" name = "prod_category[]" id="prod_category" class="form-control" required="" multiple="">
+									                          		<?php foreach (category_brand() as $key => $value) { ?>
+									                          			<option><?=$value['category_name']?></option>
+									                          		<?php } ?>
+									                          	</select>
+									                          	<br/>
+									                    <!-- <label>Brand Description</label>
 															<input type="text" name = "prod_desc" class="form-control" value = "<?php echo $row1['prod_desc'];?>">
 															<br/> -->
 														<label style="display: none;">Brand Price</label>
