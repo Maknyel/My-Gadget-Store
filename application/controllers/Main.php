@@ -15,6 +15,11 @@ class Main extends CI_Controller {
 		$this->load->view("global/footer",$data);
 	}
 
+    public function delete_all_notif(){
+        delete_all_notif();
+        echo json_encode(1);
+    }
+
 	public function manage(){
 		user_session_redirection();
 		$data = array(

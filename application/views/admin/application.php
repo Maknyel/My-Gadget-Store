@@ -47,7 +47,7 @@
                         <td>
                           <!-- <a href="#updateordinance<?php echo $row['cust_id'];?>" data-target="#updateordinance<?php echo $row['cust_id'];?>" data-toggle="modal" class="small-box-footer"><i class="glyphicon glyphicon-edit text-orange"></i></a> -->
                           <?php if($row['is_approved'] == '0'){ ?>
-                            <a href="<?=base_url()?>Admin/approve?id=<?php echo $row['apply_for_item_id'];?>&email=<?php echo $row['email'];?>&name=<?php echo ($row['fname'] != '')?$row['fname'].' '.$row['lname']:$row['name'];?>" class="btn btn-success">Approve</a>
+                            <a href="<?=base_url()?>Admin/approve?id=<?php echo $row['apply_for_item_id'];?>&user_id=<?php echo $row['user_id'];?>&email=<?php echo $row['email'];?>&name=<?php echo ($row['fname'] != '')?$row['fname'].' '.$row['lname']:$row['name'];?>" class="btn btn-success">Approve</a>
                           <?php } ?>
                           <a href="<?=base_url()?>Admin/records/<?php echo $row['apply_for_item_id'];?>" class="btn btn-<?=(count_apply_for_item_computation($row['apply_for_item_id']) > 0)?'danger':'default'?>"><span><?=count_apply_for_item_computation($row['apply_for_item_id'])?></span> Open</a>
                         </td>

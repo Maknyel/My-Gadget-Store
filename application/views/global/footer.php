@@ -91,6 +91,32 @@
 </html>
 
 <script type="text/javascript">
+  function hover_notification(){
+        $.ajax({
+            type:'POST',
+            dataType:'JSON',
+            url:`<?=base_url()?>`+'Main/delete_all_notif',
+            data:{},
+            success:function(data)
+            {
+              $('#notif_count').html("");
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+                if (textStatus == 'timeout') {
+
+                alert_data('Error','Timeout Error','');
+
+                } else {
+
+                alert_data('Error','Network problem. Please try again','');
+
+                }
+              }
+
+          });
+    
+  }
 function alert_data(title,content,redirect){
     if(title == "Success"){
             var contententity = "success";

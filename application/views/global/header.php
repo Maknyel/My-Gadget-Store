@@ -67,15 +67,15 @@
           
         <ul>
           <?php if(client_session_val()){ ?>
-            <li class="dropdown"><a href="#"><i class="fa fa-bell"></i></a>
-              <ul>
+            <li class="dropdown" onmouseover="hover_notification();"><a href="#"><i class="fa fa-bell"></i><b id="notif_count"><?=notification_count_all()?></b></a>
+              <ul style="height: 20vw;overflow: auto;">
                 <?php foreach (get_all_notification() as $key => $value) { ?>
-                  <li class="dropdown" style="width: 50px;">
+                  <li class="dropdown" style="<?=($value['is_read']==0)?'background:#d3d3d373':''?>">
                     <?php if($key != 0){ ?>
                       <hr>
                     <?php } ?>  
                       
-                    <p style="word-break: break-word;padding: 10px;"><?=$value['message']?>
+                    <p style="word-break: break-word;padding: 10px;font-size: 10px;"><?=$value['message']?>
                     <br>
                     <?=$value['date_added']?></p>
                   </li>

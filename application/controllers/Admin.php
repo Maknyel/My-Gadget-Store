@@ -193,7 +193,7 @@ class Admin extends CI_Controller {
                 'subject'           => 'Approve Loan',
                 'message_type'      => 'Loan Approved',
             );
-            insert_notif('Congratulations your applied loan and downpayment has been approved by the administrator','',$get['id']);
+            insert_notif('Congratulations your applied loan and downpayment has been approved by the administrator','',$get['user_id']);
             sendmail($data);
             redirect(base_url().'admin/application', 'location');    
         }

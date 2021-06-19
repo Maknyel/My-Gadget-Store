@@ -95,9 +95,21 @@ if(!function_exists('get_all_notification')){
 		$CI->db->select('*');
 		$CI->db->from('notification');
 		$CI->db->where('user_id', client_session_val());
+		$CI->db->order_by('date_added','desc');
 		$result = $CI->db->get()->result_array();
 		return $result;
 
+	}
+}
+
+if(!function_exists('notification_count_all')){
+	function notification_count_all() {
+		$CI =& get_instance();
+		$CI->db->select('*');
+		$CI->db->from('notification');
+		$CI->db->where('user_id', client_session_val());
+		$result = $CI->db->get();
+		return $result->num_rows();
 	}
 }
 
@@ -868,6 +880,22 @@ if(!function_exists('update_user_id')){
 				);
 				$CI->db->where('user_id', $user_id);
 				$query = $CI->db->update('user_addtional_info', $arrayName);
+				if($query){
+					return 1;
+				}else{
+					return 0;
+				}
+	}
+}
+
+if(!function_exists('delete_all_notif')){
+	function delete_all_notif() {
+		$CI =& get_instance();
+				$arrayName = array(
+					'is_read' 	=> '1',
+				);
+				$CI->db->where('user_id', client_session_val());
+				$query = $CI->db->update('notification', $arrayName);
 				if($query){
 					return 1;
 				}else{
