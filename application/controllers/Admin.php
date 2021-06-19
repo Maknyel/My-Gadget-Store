@@ -185,7 +185,7 @@ class Admin extends CI_Controller {
         $val = update_date_data_apply($get['id']);
         if($val){
             $content = "<p>Hi ".$get['name'].",</p>";
-            $content .= "<p>Congratulations your loan has been approved by the administrator</p>";
+            $content .= "<p>Congratulations your loan and downpayment has been approved by the administrator</p>";
             $data = array(
                 'content'           => $content,
                 'email'             => 'noreply@gmail.com',
@@ -193,7 +193,7 @@ class Admin extends CI_Controller {
                 'subject'           => 'Approve Loan',
                 'message_type'      => 'Loan Approved',
             );
-            
+            insert_notif('Congratulations your applied loan and downpayment has been approved by the administrator','',$get['id']);
             sendmail($data);
             redirect(base_url().'admin/application', 'location');    
         }
@@ -237,7 +237,7 @@ class Admin extends CI_Controller {
     public function update_pending_image(){
         $post = $this->input->post();
         $name = (get_user_data_admin(get_pending_item_val($post['pending_item_id'],'user_id'),'fname') != '')?get_user_data_admin(get_pending_item_val($post['pending_item_id'],'user_id'),'fname').' '.get_user_data_admin(get_pending_item_val($post['pending_item_id'],'user_id'),'lname'):get_user_data_admin(get_pending_item_val($post['pending_item_id'],'user_id'),'name');
-        $content = "<p>Hi ".$name.",</p>";
+            $content = "<p>Hi ".$name.",</p>";
             $content .= "<p>Congratulations your applied loan has been updated by the administrator</p>";
             $data = array(
                 'content'           => $content,
@@ -260,6 +260,20 @@ class Admin extends CI_Controller {
 
     public function confirm_bill(){
         $post = $this->input->post();
+        $name = (get_user_data_admin(get_billing_item_val($post['apply_for_item_id'],'user_id'),'fname') != '')?get_user_data_admin(get_billing_item_val($post['apply_for_item_id'],'user_id'),'fname').' '.get_user_data_admin(get_billing_item_val($post['apply_for_item_id'],'user_id'),'lname'):get_user_data_admin(get_billing_item_val($post['apply_for_item_id'],'user_id'),'name');
+            $content = "<p>Hi ".$name.",</p>";
+            $content .= "<p>Congratulations your payment has been approved by the administrator</p>";
+            $data = array(
+                'content'           => $content,
+                'email'             => 'noreply@gmail.com',
+                'email_to'          => get_user_additional_info_field(get_billing_item_val($post['apply_for_item_id'],'user_id'),'email'), 
+                'subject'           => 'Update applied loan',
+                'message_type'      => 'Update applied loan',
+            );
+            
+            sendmail($data);
+
+        insert_notif('Congratulations your billing payment has been approved by the administrator','',get_billing_item_val($post['apply_for_item_id'],'user_id'));
         echo json_encode(confirm_bill($post));
     }
 

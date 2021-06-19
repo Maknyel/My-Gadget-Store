@@ -323,6 +323,18 @@ if(!function_exists('get_pending_item_val')){
 	}
 }
 
+if(!function_exists('get_billing_item_val')){
+	function get_billing_item_val($apply_for_item_id,$field) {
+		$CI =& get_instance();
+		$CI->db->select("*");
+		$CI->db->from("apply_for_item_computation");
+		$CI->db->where("apply_for_item_id",$apply_for_item_id);
+		$query = $CI->db->get()->result_array();
+		$val = current($query);
+		return ($val[$field]);
+	}
+}
+
 if(!function_exists('get_user_additional_info_field_count')){
 	function get_user_additional_info_field_count($user_id) {
 		$CI =& get_instance();
