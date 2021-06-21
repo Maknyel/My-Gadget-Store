@@ -108,9 +108,22 @@ class Main extends CI_Controller {
 
 		$post = $this->input->post();
 		$val = $this->Main_model->add_pending($post);
-				echo json_encode($val);
-			
+				echo json_encode($val);			
 	}
+
+    public function phone_group(){
+
+        $post = $this->input->post();
+        $val = phone_group($post);
+                echo json_encode($val);         
+    }
+
+    public function phone_color(){
+
+        $post = $this->input->post();
+        $val = phone_color($post);
+                echo json_encode($val);         
+    }
 
     public function get_brand_entity(){
 

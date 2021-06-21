@@ -166,6 +166,8 @@
                         <th>Item Name</th>
                         <th>Brand</th>
                         <th>Category</th>
+                        <th>Specs</th>
+                        <th>Color</th>
                         <th>Item Description</th>
                         <th>Item Price</th>
                         <th>Downpayment</th>
@@ -182,6 +184,8 @@
                         <td><?php echo $row['item_name'];?></td>
                         <td><?php echo $row['brand'];?></td>
                         <td><?php echo $row['category'];?></td>
+                        <td><?php echo $row['specs'];?></td>
+                        <td><?php echo $row['color'];?></td>
                         <td><?php echo $row['item_description'];?></td>
                         <td><?php echo $row['item_price'];?></td>
                         <td><?php echo $row['min_downpayment'];?></td>        

@@ -132,6 +132,8 @@ class Main_model extends CI_Model
 
 	public function add_pending($post){
 		$data = array(
+			'specs'						=> $post['specs'],
+			'color'						=> $post['color'],
 			'message'					=> $post['message'],
 			'category'					=> $post['category'],
 			'brand'						=> $post['brand'],

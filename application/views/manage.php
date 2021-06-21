@@ -38,6 +38,20 @@
             </div>
 
             <div class="form-group">
+              <label>Specs:</label>
+              <select class="form-control" name="specs" id="specs" required>
+                
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Color:</label>
+              <select class="form-control" name="color" id="color" required>
+                
+              </select>
+            </div>
+
+            <div class="form-group">
               <label>Message:</label>
 
               <textarea value="" class="form-control" name="message" id="message"></textarea>
@@ -84,9 +98,48 @@
          data:{'brand':$('#apply_form #brand').val()},
          success:function(value)
          {
-           $('#apply_form #category').html("");
+            $('#apply_form #category').html("");
+            $('#apply_form #specs').val('');
+            $('#apply_form #color').val('');
            if(value['prod_category'] != ''){
             $.each(JSON.parse(value['prod_category']), function (index, element) {
+              if(index == 0){
+                
+                  $.ajax({
+                     type:'POST',
+                     dataType:'JSON',
+                     url:base_url+'Main/phone_group',
+                     data:{'category':element},
+                     success:function(value)
+                     {
+                       $('#apply_form #specs').html("");
+                        $.each(value, function (index, element) {
+                          $('#apply_form #specs').append('<option value="'+element+'">'+element+'</option>');
+                         });
+                         
+                        
+
+                     }
+                     });
+
+                  
+                  $.ajax({
+                     type:'POST',
+                     dataType:'JSON',
+                     url:base_url+'Main/phone_color',
+                     data:{},
+                     success:function(value)
+                     {
+                       $('#apply_form #color').html("");
+                        $.each(value, function (index, element) {
+                          $('#apply_form #color').append('<option value="'+element+'">'+element+'</option>');
+                         });
+                         
+                        
+
+                     }
+                  });
+              }
               $('#apply_form #category').append('<option value="'+element+'">'+element+'</option>');
              });
            }
@@ -94,6 +147,41 @@
             
 
          }
+
+      });
+
+      $(document).on('change keyup','#apply_form #category',function(e){
+      $('#apply_form #specs').val('');
+      $.ajax({
+         type:'POST',
+         dataType:'JSON',
+         url:base_url+'Main/phone_group',
+         data:{'category':$('#apply_form #category').val()},
+         success:function(value)
+         {
+           $('#apply_form #specs').html("");
+            $.each(value, function (index, element) {
+              $('#apply_form #specs').append('<option value="'+element+'">'+element+'</option>');
+             });
+         }
+         });
+                $('#apply_form #color').val('');
+                  $.ajax({
+                     type:'POST',
+                     dataType:'JSON',
+                     url:base_url+'Main/phone_color',
+                     data:{},
+                     success:function(value)
+                     {
+                       $('#apply_form #color').html("");
+                        $.each(value, function (index, element) {
+                          $('#apply_form #color').append('<option value="'+element+'">'+element+'</option>');
+                         });
+                         
+                        
+
+                     }
+                  });
 
       });
 

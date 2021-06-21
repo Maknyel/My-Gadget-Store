@@ -290,6 +290,45 @@ if(!function_exists('practice')){
 }
 
 
+if(!function_exists('phone_group')){
+	function phone_group($post) {
+		$arrayName = [
+			'Tv'			=> ['32inches, HD Ready - 720p, or 1280x720 pixels, Full HD - 1080p, 1920x1080 pixels','32inches, HD Ready - 460p, or 1280x720 pixels, Full HD - 1080p, 1920x1080 pixels','20inches, HD Ready - 830p, or 1280x720 pixels, Full HD - 1080p, 1920x1080 pixels','20inches, HD Ready - 720p, or 1140x720 pixels, Full HD - 1080p, 1920x1080 pixels'],
+			'Android Phone'	=> ['2/32 GB , Android 10 with Funtouch OS 11.1 , Quadra Core CPU','6/64 GB , Android 10 with Funtouch OS 11.1 , Octa Core CPU','6/128 GB , Android 11 with Funtouch OS 11.1 , Octa Core CPU','8/128 GB , Android 11 with Funtouch OS 11.2 , Octa Core CPU'],
+			'Laptop'		=> ['Intel Core i7 8th Gen,  8 GB DDR4 RAM, Quad Core, 1.8 GHz, Windows 10 OS','Intel Core i7 8th Gen,  8 GB DDR4 RAM, Quad Core, 1.8 GHz, Windows 8 OS','Intel Core i5 8th Gen,  6 GB DDR4 RAM, Quad Core, 1.8 GHz, Windows 8 OS','Intel Core i5 8th Gen,  6 GB DDR4 RAM, Quad Core, 1.8 GHz, Windows 10 OS'],
+			'PlayStation'				=> [''],
+			'Watch'						=> [''],
+			'IOS'						=> [''],
+		];
+		return $arrayName[$post['category']];
+	}
+}
+
+if(!function_exists('phone_color')){
+	function phone_color($post) {
+		$arrayName = [
+			'Black',
+			'White',
+			'Grey',
+			'Blue',
+			'Violet',
+		];
+		return $arrayName;
+	}
+}
+
+if(!function_exists('practice')){
+	function practice() {
+		$arrayName = array(
+			'SSS','UMID','PRC','Driver&apos;s license','Passport','TIN ID'
+		);
+
+		return $arrayName;
+
+	}
+}
+
+
 if(!function_exists('practice1')){
 	function practice1() {
 		$arrayName = array(
