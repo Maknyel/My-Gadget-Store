@@ -13,7 +13,7 @@
     <div class="modal-dialog">
     
       <!-- Modal content-->
-      <div class="modal-content">
+      <div class="modal-content" style="overflow: auto;max-height: 60vh;">
         <form id="apply_form">
           <div class="modal-header">
             <h4 class="modal-title">Apply</h4>
